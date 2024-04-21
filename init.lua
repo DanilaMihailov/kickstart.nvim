@@ -456,14 +456,20 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
+        elixirls = {},
+        cssls = {},
+        html = {},
+        jsonls = {},
+        yamlls = {},
+        tsserver = {},
         pyright = {
-          settings = {
-            python = {
-              analysis = {
-                diagnosticMode = 'workspace',
-              },
-            },
-          },
+          -- settings = {
+          --   python = {
+          --     analysis = {
+          --       diagnosticMode = 'workspace',
+          --     },
+          --   },
+          -- },
         },
         rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
