@@ -14,6 +14,10 @@ return {
     { '\\', ':Neotree reveal<CR>', { desc = 'NeoTree reveal' } },
   },
   opts = {
+    default_component_configs = {
+      -- icons not showing properly :(
+      git_status = { symbols = false },
+    },
     filesystem = {
       window = {
         mappings = {
