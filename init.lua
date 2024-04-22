@@ -143,7 +143,7 @@ require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
-  { 'tpope/vim-fugitive', dependencies = 'tpope/vim-dispatch' },
+  'tpope/vim-fugitive',
   'tpope/vim-surround', -- Surrond with braces ysB
   'tpope/vim-repeat', -- enable repeat for tpope's plugins
   'tpope/vim-unimpaired', -- ]b for next buffer, ]e for exchange line, etc
@@ -617,7 +617,9 @@ require('lazy').setup({
       --  nvim-cmp does not ship with all sources by default. They are split
       --  into multiple repos for maintenance purposes.
       'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-nvim-lsp-signature-help',
       'hrsh7th/cmp-path',
+      'hrsh7th/cmp-buffer',
     },
     config = function()
       -- See `:help cmp`
@@ -687,8 +689,21 @@ require('lazy').setup({
         },
         sources = {
           { name = 'nvim_lsp' },
+          { name = 'nvim_lsp_signature_help' },
           { name = 'luasnip' },
           { name = 'path' },
+          {
+            name = 'buffer',
+            option = {
+              get_bufnrs = function()
+                local bufs = {}
+                for _, win in ipairs(vim.api.nvim_list_wins()) do
+                  bufs[vim.api.nvim_win_get_buf(win)] = true
+                end
+                return vim.tbl_keys(bufs)
+              end,
+            },
+          },
         },
       }
     end,
