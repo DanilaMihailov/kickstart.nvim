@@ -11,7 +11,13 @@ return {
   },
   cmd = 'Neotree',
   keys = {
-    { '\\', ':Neotree reveal<CR>', { desc = 'NeoTree reveal' } },
+    {
+      '\\',
+      function()
+        require('neo-tree.command').execute { action = 'focus', reveal = true }
+      end,
+      { desc = 'NeoTree reveal' },
+    },
   },
   opts = {
     default_component_configs = {
