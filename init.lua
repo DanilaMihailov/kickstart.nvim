@@ -179,7 +179,11 @@ require('lazy').setup({
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     config = function() -- This is the function that runs, AFTER loading
-      require('which-key').setup()
+      require('which-key').setup {
+        window = {
+          winblend = 20,
+        },
+      }
 
       -- Document existing key chains
       require('which-key').register {
@@ -190,6 +194,15 @@ require('lazy').setup({
         ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
         ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
         ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
+        ['<leader>G'] = { name = '[G]it commands', _ = 'which_key_ignore' },
+        ['<leader>Gp'] = { '<cmd>Git push<cr>', '[G]it [P]ush' },
+        ['<leader>Gu'] = { '<cmd>Git pull<cr>', '[G]it P[u]ll' },
+        ['<leader>Gg'] = { '<cmd>G<cr>', '[G]it Status' },
+        ['<leader>Gc'] = { '<cmd>Telescope git_branches<cr>', '[G]it [C]heckout' },
+        ['<leader>Gf'] = { '<cmd>Telescope git_files<cr>', '[G]it [F]iles' },
+        -- FIXME: not working
+        ['<leader>Gb'] = { 'call feedkeys(":Git checkout -b ")', '[G]it Create [B]ranch' },
+        ['<leader>Gs'] = { "execute 'Git push origin -u '.fugitive#Head()", '[G]it [S]et upstream' },
       }
       -- visual mode
       require('which-key').register({
