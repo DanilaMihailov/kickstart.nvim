@@ -229,25 +229,21 @@ require('lazy').setup({
           end,
         })
         local logs = {}
+        local function handle_out(ch_id, data)
+          if data == nil then
+            return
+          end
+          for _, v in ipairs(data) do
+            if v ~= nil then
+              table.insert(logs, v)
+            end
+          end
+        end
         vim.fn.jobstart(cmd, {
           stderr_buffered = true,
           stdout_buffered = true,
-          on_stdout = function(ch_id, data)
-            if data == nil then
-              return
-            end
-            for _, v in ipairs(data) do
-              table.insert(logs, v)
-            end
-          end,
-          on_stderr = function(ch_id, data)
-            if data == nil then
-              return
-            end
-            for _, v in ipairs(data) do
-              table.insert(logs, v)
-            end
-          end,
+          on_stdout = handle_out,
+          on_stderr = handle_out,
           on_exit = function()
             is_done = true
             notify.notify(vim.fn.join(logs, '\n'), vim.log.levels.INFO, {
