@@ -13,6 +13,38 @@ vim.g.have_nerd_font = true
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
+-- vim.o.keymap = 'russian-jcukenwin' -- allow use russian keys for moves and stuff
+--
+-- allows using motions in russian language
+vim.opt.langmap =
+  'ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz'
+
+-- helps gf to find files
+-- ** - all files from root
+-- .  - relative from current
+-- ,, - relative from current in same dir
+vim.opt.path = vim.opt.path + '**,.,,'
+
+vim.o.shell = '/bin/zsh' -- use zsh as default shell
+
+-- use ripgrep for :grep command
+if vim.fn.executable 'rg' == 1 then
+  vim.o.grepprg = 'rg --vimgrep --hidden'
+end
+
+vim.cmd [[
+augroup mygroupft
+  autocmd!
+  " detect filetypes
+  autocmd BufNewFile,BufRead *.js.ejs set filetype=javascript
+  autocmd BufNewFile,BufRead *.json.ejs set filetype=json
+  autocmd BufNewFile,BufRead *.html.ejs set filetype=html
+augroup end
+]]
+
+-- Make searching better
+vim.opt.gdefault = true -- Never have to type /g at the end of search / replace again
+
 -- Make line numbers default
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
