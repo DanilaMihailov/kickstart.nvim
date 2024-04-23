@@ -195,24 +195,27 @@ require('lazy').setup({
         ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
         ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
         ['<leader><leader>'] = { name = 'Additional commands', _ = 'which_key_ignore' },
-        ['<leader><leader>g'] = { name = '[G]it commands', _ = 'which_key_ignore' },
-        ['<leader><leader>gp'] = { '<cmd>Git push<cr>', '[G]it [P]ush' },
-        ['<leader><leader>gu'] = { '<cmd>Git pull<cr>', '[G]it P[u]ll' },
-        ['<leader><leader>gg'] = { '<cmd>G<cr>', '[G]it Status' },
-        ['<leader><leader>gc'] = { '<cmd>Telescope git_branches<cr>', '[G]it [C]heckout' },
-        ['<leader><leader>gf'] = { '<cmd>Telescope git_files<cr>', '[G]it [F]iles' },
-        ['<leader><leader>gb'] = {
-          function()
-            vim.fn.feedkeys ':Git checkout -b '
-          end,
-          '[G]it Create [B]ranch',
-        },
-        ['<leader><leader>gs'] = {
-          function()
-            local head = vim.api.nvim_call_function('fugitive#Head', {})
-            vim.fn.execute('Git push origin -u ' .. head)
-          end,
-          '[G]it [S]et upstream',
+        ['<leader><leader>g'] = {
+          name = '[G]it commands',
+          _ = 'which_key_ignore',
+          p = { '<cmd>Git push<cr>', '[G]it [P]ush' },
+          u = { '<cmd>Git pull<cr>', '[G]it P[u]ll' },
+          g = { '<cmd>G<cr>', '[G]it Status' },
+          c = { '<cmd>Telescope git_branches<cr>', '[G]it [C]heckout' },
+          f = { '<cmd>Telescope git_files<cr>', '[G]it [F]iles' },
+          b = {
+            function()
+              vim.fn.feedkeys ':Git checkout -b '
+            end,
+            '[G]it Create [B]ranch',
+          },
+          s = {
+            function()
+              local head = vim.api.nvim_call_function('fugitive#Head', {})
+              vim.fn.execute('Git push origin -u ' .. head)
+            end,
+            '[G]it [S]et upstream',
+          },
         },
       }
       -- visual mode
