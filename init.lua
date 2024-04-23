@@ -218,6 +218,45 @@ require('lazy').setup({
         },
       }
 
+      local function runjob_with_notify(cmd, title)
+        local is_done = false
+        local notify = require 'notify'
+        notify.notify('Doing ' .. vim.fn.join(cmd, ' ') .. '...', vim.log.levels.INFO, {
+          title = title,
+          timeout = 0,
+          keep = function()
+            return not is_done
+          end,
+        })
+        local logs = {}
+        vim.fn.jobstart(cmd, {
+          stderr_buffered = true,
+          stdout_buffered = true,
+          on_stdout = function(ch_id, data)
+            if data == nil then
+              return
+            end
+            for _, v in ipairs(data) do
+              table.insert(logs, v)
+            end
+          end,
+          on_stderr = function(ch_id, data)
+            if data == nil then
+              return
+            end
+            for _, v in ipairs(data) do
+              table.insert(logs, v)
+            end
+          end,
+          on_exit = function()
+            is_done = true
+            notify.notify(vim.fn.join(logs, '\n'), vim.log.levels.INFO, {
+              title = title,
+            })
+          end,
+        })
+      end
+
       -- Document existing key chains
       require('which-key').register {
         ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
@@ -231,8 +270,18 @@ require('lazy').setup({
         ['<leader><leader>g'] = {
           name = '[G]it commands',
           _ = 'which_key_ignore',
-          p = { '<cmd>Git push<cr>', '[G]it [P]ush' },
-          u = { '<cmd>Git pull<cr>', '[G]it P[u]ll' },
+          p = {
+            function()
+              runjob_with_notify({ 'git', 'push' }, 'Git push')
+            end,
+            '[G]it [P]ush',
+          },
+          u = {
+            function()
+              runjob_with_notify({ 'git', 'pull' }, 'Git pull')
+            end,
+            '[G]it P[u]ll',
+          },
           g = { '<cmd>G<cr>', '[G]it Status' },
           c = { '<cmd>Telescope git_branches<cr>', '[G]it [C]heckout' },
           f = { '<cmd>Telescope git_files<cr>', '[G]it [F]iles' },
@@ -245,7 +294,8 @@ require('lazy').setup({
           s = {
             function()
               local head = vim.api.nvim_call_function('fugitive#Head', {})
-              vim.fn.execute('Git push origin -u ' .. head)
+              runjob_with_notify({ 'git', 'push', 'origin', '-u', head }, 'Set upstream branch')
+              -- vim.fn.execute('Git push origin -u ' .. head)
             end,
             '[G]it [S]et upstream',
           },
@@ -575,7 +625,7 @@ require('lazy').setup({
                 callSnippet = 'Replace',
               },
               -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
+              diagnostics = { disable = { 'missing-fields' } },
             },
           },
         },
