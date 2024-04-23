@@ -194,15 +194,26 @@ require('lazy').setup({
         ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
         ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
         ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
-        ['<leader>G'] = { name = '[G]it commands', _ = 'which_key_ignore' },
-        ['<leader>Gp'] = { '<cmd>Git push<cr>', '[G]it [P]ush' },
-        ['<leader>Gu'] = { '<cmd>Git pull<cr>', '[G]it P[u]ll' },
-        ['<leader>Gg'] = { '<cmd>G<cr>', '[G]it Status' },
-        ['<leader>Gc'] = { '<cmd>Telescope git_branches<cr>', '[G]it [C]heckout' },
-        ['<leader>Gf'] = { '<cmd>Telescope git_files<cr>', '[G]it [F]iles' },
-        -- FIXME: not working
-        ['<leader>Gb'] = { 'call feedkeys(":Git checkout -b ")', '[G]it Create [B]ranch' },
-        ['<leader>Gs'] = { "execute 'Git push origin -u '.fugitive#Head()", '[G]it [S]et upstream' },
+        ['<leader><leader>'] = { name = 'Additional commands', _ = 'which_key_ignore' },
+        ['<leader><leader>g'] = { name = '[G]it commands', _ = 'which_key_ignore' },
+        ['<leader><leader>gp'] = { '<cmd>Git push<cr>', '[G]it [P]ush' },
+        ['<leader><leader>gu'] = { '<cmd>Git pull<cr>', '[G]it P[u]ll' },
+        ['<leader><leader>gg'] = { '<cmd>G<cr>', '[G]it Status' },
+        ['<leader><leader>gc'] = { '<cmd>Telescope git_branches<cr>', '[G]it [C]heckout' },
+        ['<leader><leader>gf'] = { '<cmd>Telescope git_files<cr>', '[G]it [F]iles' },
+        ['<leader><leader>gb'] = {
+          function()
+            vim.fn.feedkeys ':Git checkout -b '
+          end,
+          '[G]it Create [B]ranch',
+        },
+        ['<leader><leader>gs'] = {
+          function()
+            local head = vim.api.nvim_call_function('fugitive#Head', {})
+            vim.fn.execute('Git push origin -u ' .. head)
+          end,
+          '[G]it [S]et upstream',
+        },
       }
       -- visual mode
       require('which-key').register({
@@ -288,7 +299,7 @@ require('lazy').setup({
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-      vim.keymap.set('n', '<leader>sb', builtin.git_branches, { desc = '[S]earch [B]ranches' })
+      vim.keymap.set('n', '<leader>sb', builtin.buffers, { desc = '[S]earch [B]uffers' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
       vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
@@ -297,7 +308,6 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-      vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
