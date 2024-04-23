@@ -147,6 +147,7 @@ require('lazy').setup({
   'tpope/vim-surround', -- Surrond with braces ysB
   'tpope/vim-repeat', -- enable repeat for tpope's plugins
   'tpope/vim-unimpaired', -- ]b for next buffer, ]e for exchange line, etc
+  'Asheq/close-buffers.vim', -- Bdelete [other, hidden, this]
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -216,6 +217,12 @@ require('lazy').setup({
             end,
             '[G]it [S]et upstream',
           },
+        },
+        ['<leader><leader>b'] = {
+          name = '[B]uffer commands',
+          _ = 'which_key_ignore',
+          o = { '<cmd>Bdelete other<cr>', '[B]uffer Delete [O]thers' },
+          h = { '<cmd>Bdelete hidden<cr>', '[B]uffer Delete [H]idden' },
         },
       }
       -- visual mode
