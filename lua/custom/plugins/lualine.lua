@@ -12,6 +12,7 @@ return {
       options = {
         globalstatus = true,
         theme = custom_gruvbox,
+        -- theme = 'tokyonight',
         icons_enabled = false,
         component_separators = { left = '', right = '' },
         section_separators = { left = '', right = '' },

@@ -305,6 +305,7 @@ require('lazy').setup({
         --  All the info you're looking for is in `:help telescope.setup()`
         --
         defaults = {
+          dynamic_preview_title = true,
           mappings = {
             i = {
               -- ['<c-enter>'] = 'to_fuzzy_refine',
@@ -493,6 +494,10 @@ require('lazy').setup({
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
             end, '[T]oggle Inlay [H]ints')
           end
+          -- if client.name == 'ruff_lsp' then
+          --   -- Disable hover in favor of Pyright
+          --   client.server_capabilities.hoverProvider = false
+          -- end
         end,
       })
 
@@ -530,11 +535,26 @@ require('lazy').setup({
         yamlls = {},
         tsserver = {},
         emmet_ls = {},
+        -- Configure `ruff-lsp`.
+        -- See: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#ruff_lsp
+        -- ruff_lsp = {
+        --   init_options = {
+        --     settings = {
+        --       -- Any extra CLI arguments for `ruff` go here.
+        --       args = {},
+        --     },
+        --   },
+        -- },
         pyright = {
+          -- pyright = {
+          --   -- Using Ruff's import organizer
+          --   disableOrganizeImports = true,
+          -- },
           -- settings = {
           --   python = {
           --     analysis = {
-          --       diagnosticMode = 'workspace',
+          --       ignore = { '*' },
+          --       -- diagnosticMode = 'workspace',
           --     },
           --   },
           -- },
@@ -578,9 +598,10 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
-        'autopep8',
-        'docformatter',
-        'isort',
+        -- 'autopep8',
+        -- 'docformatter',
+        -- 'isort',
+        'ruff',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -614,7 +635,7 @@ require('lazy').setup({
     },
     opts = {
       notify_on_error = true,
-      format_after_save = function(bufnr)
+      format_on_save = function(bufnr)
         -- отключает автоформат для директории kkrm
         if vim.fn.getcwd(-1, -1):find 'kkrm' then
           return false
@@ -631,7 +652,8 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
-        python = { 'autopep8', 'docformatter', 'isort' },
+        -- python = { 'autopep8', 'docformatter', 'isort' },
+        python = { 'ruff_fix', 'ruff_format' },
         --
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
@@ -800,6 +822,7 @@ require('lazy').setup({
   },
 
   { 'folke/tokyonight.nvim' },
+  { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
 
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
