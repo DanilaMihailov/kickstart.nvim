@@ -176,7 +176,7 @@ require('lazy').setup({
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
   'tpope/vim-fugitive',
-  'tpope/vim-surround', -- Surrond with braces ysB
+  -- 'tpope/vim-surround', -- Surrond with braces ysB
   'tpope/vim-repeat', -- enable repeat for tpope's plugins
   'tpope/vim-unimpaired', -- ]b for next buffer, ]e for exchange line, etc
   'Asheq/close-buffers.vim', -- Bdelete [other, hidden, this]
@@ -219,14 +219,8 @@ require('lazy').setup({
       }
 
       local function runjob_with_notify(cmd, title)
-        local is_done = false
-        local notify = require 'notify'
-        notify.notify('Doing ' .. vim.fn.join(cmd, ' ') .. '...', vim.log.levels.INFO, {
+        vim.notify('Doing ' .. vim.fn.join(cmd, ' ') .. '...', vim.log.levels.INFO, {
           title = title,
-          timeout = 0,
-          keep = function()
-            return not is_done
-          end,
         })
         local logs = {}
         local function handle_out(ch_id, data)
@@ -245,8 +239,7 @@ require('lazy').setup({
           on_stdout = handle_out,
           on_stderr = handle_out,
           on_exit = function()
-            is_done = true
-            notify.notify(vim.fn.join(logs, '\n'), vim.log.levels.INFO, {
+            vim.notify(vim.fn.join(logs, '\n'), vim.log.levels.INFO, {
               title = title,
             })
           end,
@@ -263,6 +256,7 @@ require('lazy').setup({
         ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
         ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
         ['<leader><leader>'] = { name = 'Additional commands', _ = 'which_key_ignore' },
+        -- TODO: move this bindings sowemwhere else
         ['<leader><leader>g'] = {
           name = '[G]it commands',
           _ = 'which_key_ignore',
@@ -917,7 +911,7 @@ require('lazy').setup({
       -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
-      -- require('mini.surround').setup()
+      require('mini.surround').setup()
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
