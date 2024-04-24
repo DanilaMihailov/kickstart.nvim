@@ -151,6 +151,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+require 'mihd.git-commands'
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -179,7 +181,13 @@ require('lazy').setup({
   -- 'tpope/vim-surround', -- Surrond with braces ysB
   'tpope/vim-repeat', -- enable repeat for tpope's plugins
   'tpope/vim-unimpaired', -- ]b for next buffer, ]e for exchange line, etc
-  'Asheq/close-buffers.vim', -- Bdelete [other, hidden, this]
+  { -- Bdelete [other, hidden, this]
+    'Asheq/close-buffers.vim',
+    config = function()
+      vim.keymap.set('n', '<leader><leader>bo', '<cmd>Bdelete other<cr>', { desc = '[B]uffer Delete [O]ther' })
+      vim.keymap.set('n', '<leader><leader>bh', '<cmd>Bdelete hidden<cr>', { desc = '[B]uffer Delete [H]idden' })
+    end,
+  },
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -218,34 +226,6 @@ require('lazy').setup({
         },
       }
 
-      local function runjob_with_notify(cmd, title)
-        vim.notify('Doing ' .. vim.fn.join(cmd, ' ') .. '...', vim.log.levels.INFO, {
-          title = title,
-        })
-        local logs = {}
-        local function handle_out(ch_id, data)
-          if data == nil then
-            return
-          end
-          for _, v in ipairs(data) do
-            if v ~= nil then
-              table.insert(logs, v)
-            end
-          end
-        end
-        vim.fn.jobstart(cmd, {
-          stderr_buffered = true,
-          stdout_buffered = true,
-          on_stdout = handle_out,
-          on_stderr = handle_out,
-          on_exit = function()
-            vim.notify(vim.fn.join(logs, '\n'), vim.log.levels.INFO, {
-              title = title,
-            })
-          end,
-        })
-      end
-
       -- Document existing key chains
       require('which-key').register {
         ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
@@ -255,47 +235,9 @@ require('lazy').setup({
         ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
         ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
         ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
-        ['<leader><leader>'] = { name = 'Additional commands', _ = 'which_key_ignore' },
-        -- TODO: move this bindings sowemwhere else
-        ['<leader><leader>g'] = {
-          name = '[G]it commands',
-          _ = 'which_key_ignore',
-          p = {
-            function()
-              runjob_with_notify({ 'git', 'push' }, 'Git push')
-            end,
-            '[G]it [P]ush',
-          },
-          u = {
-            function()
-              runjob_with_notify({ 'git', 'pull' }, 'Git pull')
-            end,
-            '[G]it P[u]ll',
-          },
-          g = { '<cmd>G<cr>', '[G]it Status' },
-          c = { '<cmd>Telescope git_branches<cr>', '[G]it [C]heckout' },
-          f = { '<cmd>Telescope git_files<cr>', '[G]it [F]iles' },
-          b = {
-            function()
-              vim.fn.feedkeys ':Git checkout -b '
-            end,
-            '[G]it Create [B]ranch',
-          },
-          s = {
-            function()
-              local head = vim.api.nvim_call_function('fugitive#Head', {})
-              runjob_with_notify({ 'git', 'push', 'origin', '-u', head }, 'Set upstream branch')
-              -- vim.fn.execute('Git push origin -u ' .. head)
-            end,
-            '[G]it [S]et upstream',
-          },
-        },
-        ['<leader><leader>b'] = {
-          name = '[B]uffer commands',
-          _ = 'which_key_ignore',
-          o = { '<cmd>Bdelete other<cr>', '[B]uffer Delete [O]thers' },
-          h = { '<cmd>Bdelete hidden<cr>', '[B]uffer Delete [H]idden' },
-        },
+        ['<leader><leader>'] = { name = '[ ] Additional commands', _ = 'which_key_ignore' },
+        ['<leader><leader>g'] = { name = '[G]it commands', _ = 'which_key_ignore' },
+        ['<leader><leader>b'] = { name = '[B]uffer commands', _ = 'which_key_ignore' },
       }
       -- visual mode
       require('which-key').register({
@@ -394,6 +336,8 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+      vim.keymap.set('n', '<leader><leader>gc', builtin.git_branches, { desc = '[G]it [C]heckout' })
+      vim.keymap.set('n', '<leader><leader>gf', builtin.git_files, { desc = '[G]it [F]iles' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
