@@ -25,6 +25,9 @@ return {
       git_status = { symbols = false },
     },
     filesystem = {
+      filtered_items = {
+        hide_dotfiles = false,
+      },
       window = {
         mappings = {
           ['\\'] = 'close_window',
