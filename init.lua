@@ -1,3 +1,9 @@
+-- автокомплит, go to definition (LSP, Mason, nvim-cmp)
+-- подсветка синтакса (Treesitter)
+-- поиск по файлам (telescope, neo-tree)
+-- интеграция с гит (fugitive, gitsigns, telescope)
+-- автоформатирование (conform, lsp)
+--
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -607,6 +613,8 @@ require('lazy').setup({
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
+      require('lspconfig').gleam.setup {}
+
       require('mason-lspconfig').setup {
         handlers = {
           function(server_name)
@@ -624,7 +632,8 @@ require('lazy').setup({
 
   { -- Autoformat
     'stevearc/conform.nvim',
-    lazy = false,
+    event = { 'BufWritePre' },
+    cmd = { 'ConformInfo' },
     keys = {
       {
         '<leader>f',
@@ -653,6 +662,7 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        gleam = { 'gleam' },
         markdown = { 'markdownlint' },
         -- Conform can also run multiple formatters sequentially
         python = function()
@@ -669,6 +679,9 @@ require('lazy').setup({
         javascript = { { 'prettierd', 'prettier' } },
       },
     },
+    init = function()
+      vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+    end,
   },
 
   { -- Autocompletion
