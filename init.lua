@@ -494,10 +494,10 @@ require('lazy').setup({
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
             end, '[T]oggle Inlay [H]ints')
           end
-          -- if client.name == 'ruff_lsp' then
-          --   -- Disable hover in favor of Pyright
-          --   client.server_capabilities.hoverProvider = false
-          -- end
+          if client.name == 'ruff_lsp' then
+            -- Disable hover in favor of Pyright
+            client.server_capabilities.hoverProvider = false
+          end
         end,
       })
 
@@ -537,26 +537,26 @@ require('lazy').setup({
         emmet_ls = {},
         -- Configure `ruff-lsp`.
         -- See: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#ruff_lsp
-        -- ruff_lsp = {
-        --   init_options = {
-        --     settings = {
-        --       -- Any extra CLI arguments for `ruff` go here.
-        --       args = {},
-        --     },
-        --   },
-        -- },
+        ruff_lsp = {
+          init_options = {
+            settings = {
+              -- Any extra CLI arguments for `ruff` go here.
+              args = {},
+            },
+          },
+        },
         pyright = {
-          -- pyright = {
-          --   -- Using Ruff's import organizer
-          --   disableOrganizeImports = true,
-          -- },
+          pyright = {
+            -- Using Ruff's import organizer
+            disableOrganizeImports = true,
+          },
           -- settings = {
-          --   python = {
-          --     analysis = {
-          --       ignore = { '*' },
-          --       -- diagnosticMode = 'workspace',
-          --     },
+          -- python = {
+          --   analysis = {
+          --     ignore = { '*' },
+          --     -- diagnosticMode = 'workspace',
           --   },
+          -- },
           -- },
         },
         rust_analyzer = {},
@@ -598,10 +598,12 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
-        -- 'autopep8',
-        -- 'docformatter',
-        -- 'isort',
+        'autopep8',
+        'docformatter',
+        'isort',
         'ruff',
+        'prettier',
+        'markdownlint',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -651,13 +653,20 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        markdown = { 'markdownlint' },
         -- Conform can also run multiple formatters sequentially
-        -- python = { 'autopep8', 'docformatter', 'isort' },
-        python = { 'ruff_fix', 'ruff_format' },
+        python = function()
+          -- ruff only works with python3
+          if vim.fn.getcwd(-1, -1):find 'kkrm' then
+            return { 'autopep8', 'docformatter', 'isort' }
+          else
+            return { 'ruff_fix', 'ruff_format' }
+          end
+        end,
         --
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
-        -- javascript = { { "prettierd", "prettier" } },
+        javascript = { { 'prettierd', 'prettier' } },
       },
     },
   },
