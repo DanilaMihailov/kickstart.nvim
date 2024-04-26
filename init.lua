@@ -551,6 +551,9 @@ require('lazy').setup({
             },
           },
         },
+        ruff = {
+          autostart = false,
+        },
         pyright = {
           pyright = {
             -- Using Ruff's import organizer
@@ -643,10 +646,21 @@ require('lazy').setup({
         mode = '',
         desc = '[F]ormat buffer',
       },
+      {
+        '<leader>tf',
+        function()
+          vim.g.disable_autoformat = not vim.g.disable_autoformat
+        end,
+        mode = '',
+        desc = '[T]oggle [F]ormat on Save',
+      },
     },
     opts = {
       notify_on_error = true,
       format_on_save = function(bufnr)
+        if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+          return
+        end
         -- отключает автоформат для директории kkrm
         if vim.fn.getcwd(-1, -1):find 'kkrm' then
           return false
