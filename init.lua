@@ -192,6 +192,7 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+  'danilamihailov/vim-tips-wiki',
 
   'tpope/vim-fugitive',
   -- 'tpope/vim-surround', -- Surrond with braces ysB
