@@ -624,6 +624,7 @@ require('lazy').setup({
         'ruff',
         'prettier',
         'markdownlint',
+        'taplo',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -688,6 +689,7 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         gleam = { 'gleam' },
+        toml = { 'taplo' },
         markdown = { 'markdownlint' },
         -- Conform can also run multiple formatters sequentially
         python = function()
