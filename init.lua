@@ -121,9 +121,9 @@ vim.diagnostic.config {
 }
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
+-- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
+-- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
+-- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 vim.keymap.set('n', '<leader>td', function()
   vim.g.show_diagnostic_virutal_text = not vim.g.show_diagnostic_virutal_text
@@ -247,7 +247,8 @@ require('lazy').setup({
       require('which-key').register {
         ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
         ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-        ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
+        ['<leader>r'] = { name = '[R]un', _ = 'which_key_ignore' },
+        ['<leader>rt'] = { name = '[R]un [T]ests', _ = 'which_key_ignore' },
         ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
         ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
         ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
@@ -446,7 +447,7 @@ require('lazy').setup({
           map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
           -- Find references for the word under your cursor.
-          map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+          -- map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
 
           -- Jump to the implementation of the word under your cursor.
           --  Useful when your language has ways of declaring types without an actual implementation.
@@ -467,15 +468,15 @@ require('lazy').setup({
 
           -- Rename the variable under your cursor.
           --  Most Language Servers support renaming across files, etc.
-          map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+          -- map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
 
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
-          map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+          -- map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
           -- Opens a popup that displays documentation about the word under your cursor
           --  See `:help K` for why this keymap.
-          map('K', vim.lsp.buf.hover, 'Hover Documentation')
+          -- map('K', vim.lsp.buf.hover, 'Hover Documentation')
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
@@ -511,7 +512,7 @@ require('lazy').setup({
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
             end, '[T]oggle Inlay [H]ints')
           end
-          if client.name == 'ruff_lsp' then
+          if client and client.name == 'ruff_lsp' then
             -- Disable hover in favor of Pyright
             client.server_capabilities.hoverProvider = false
           end
@@ -849,7 +850,7 @@ require('lazy').setup({
 
             -- The function below will be called before any actual modifications from lspkind
             -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
-            before = function(entry, vim_item)
+            before = function(_, vim_item)
               -- ...
               return vim_item
             end,
@@ -869,7 +870,15 @@ require('lazy').setup({
       }
     end,
   },
-
+  {
+    'danymat/neogen',
+    config = true,
+    opts = {
+      snippet_engine = 'luasnip',
+    },
+    -- Uncomment next line if you want to follow only stable versions
+    -- version = "*"
+  },
   { 'folke/tokyonight.nvim' },
   { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
 
@@ -1016,6 +1025,36 @@ require('lazy').setup({
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
   { import = 'custom.plugins' },
+  {
+    'Bekaboo/dropbar.nvim',
+    -- optional, but required for fuzzy finder support
+    dependencies = {
+      'nvim-telescope/telescope-fzf-native.nvim',
+    },
+  },
+  {
+    'nvim-neotest/neotest',
+    dependencies = {
+      'nvim-neotest/nvim-nio',
+      'nvim-lua/plenary.nvim',
+      'antoinemadec/FixCursorHold.nvim',
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-neotest/neotest-python',
+    },
+    config = function()
+      local neotest = require 'neotest'
+      require('neotest').setup {
+        adapters = {
+          require 'neotest-python',
+        },
+      }
+      vim.keymap.set('n', '<leader>rtt', function()
+        neotest.run.run()
+        neotest.summary.open()
+        neotest.output_panel.open()
+      end, { desc = 'Run nearest [t]est' })
+    end,
+  },
 }, {
   ui = {
     border = 'shadow',
