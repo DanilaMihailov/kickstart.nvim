@@ -1049,7 +1049,6 @@ require('lazy').setup({
     config = function()
       local neotest = require 'neotest'
       require('neotest').setup {
-        log_level = vim.log.levels.DEBUG,
         adapters = {
           require 'neotest-python',
           require 'neotest-plenary',
