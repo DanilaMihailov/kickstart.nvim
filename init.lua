@@ -1031,28 +1031,42 @@ require('lazy').setup({
     dependencies = {
       'nvim-telescope/telescope-fzf-native.nvim',
     },
+    init = function()
+      vim.cmd.hi 'WinBarNC ctermbg=NONE guibg=NONE'
+    end,
   },
   {
     'nvim-neotest/neotest',
     dependencies = {
-      'nvim-neotest/nvim-nio',
+      -- pin nio verison for now https://github.com/nvim-neotest/neotest/issues/402#issuecomment-2089636675
+      { 'nvim-neotest/nvim-nio', version = '1.9.0' },
       'nvim-lua/plenary.nvim',
       'antoinemadec/FixCursorHold.nvim',
       'nvim-treesitter/nvim-treesitter',
       'nvim-neotest/neotest-python',
+      'nvim-neotest/neotest-plenary',
     },
     config = function()
       local neotest = require 'neotest'
       require('neotest').setup {
+        log_level = vim.log.levels.DEBUG,
         adapters = {
           require 'neotest-python',
+          require 'neotest-plenary',
         },
       }
       vim.keymap.set('n', '<leader>rtt', function()
-        neotest.run.run()
         neotest.summary.open()
-        neotest.output_panel.open()
-      end, { desc = 'Run nearest [t]est' })
+        neotest.run.run()
+      end, { desc = 'Run Nearest [T]est' })
+
+      vim.keymap.set('n', '<leader>rto', function()
+        neotest.output_panel.toggle()
+      end, { desc = 'Toggle [O]output Panel' })
+
+      vim.keymap.set('n', '<leader>rts', function()
+        neotest.summary.toggle()
+      end, { desc = 'Toggle [S]ummary' })
     end,
   },
 }, {
