@@ -363,6 +363,9 @@ require('lazy').setup({
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sb', builtin.buffers, { desc = '[S]earch [B]uffers' })
+      vim.keymap.set('n', '<leader>sc', function()
+        builtin.colorscheme { enable_preview = true }
+      end, { desc = '[S]earch [C]olorscheme' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
       vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
@@ -561,7 +564,7 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         -- clangd = {},
-        -- gopls = {},
+        gopls = {},
         elixirls = {},
         cssls = {},
         html = {},
@@ -579,10 +582,14 @@ require('lazy').setup({
             },
           },
         },
+        basedpyright = {
+          autostart = true,
+        },
         ruff = {
           autostart = false,
         },
         pyright = {
+          autostart = false,
           pyright = {
             -- Using Ruff's import organizer
             disableOrganizeImports = true,
@@ -896,6 +903,10 @@ require('lazy').setup({
     -- version = "*"
   },
   { 'folke/tokyonight.nvim' },
+  {
+    'olimorris/onedarkpro.nvim',
+    priority = 1000, -- Ensure it loads first
+  },
   { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
 
   { -- You can easily change to a different colorscheme.
@@ -912,6 +923,9 @@ require('lazy').setup({
 
       local gruvbox = require 'gruvbox'
       gruvbox.setup {
+        -- contrast = '',
+        -- dim_inactive = false,
+        -- transparent_mode = true,
         overrides = {
           SignColumn = { bg = 'NONE' },
           GruvboxRedSign = { bg = 'NONE' },
@@ -953,24 +967,6 @@ require('lazy').setup({
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
-
-      -- Simple and easy statusline.
-      --  You could remove this setup call if you don't like it,
-      --  and try some other statusline plugin
-      -- local statusline = require 'mini.statusline'
-      -- set use_icons to true if you have a Nerd Font
-      -- statusline.setup { use_icons = vim.g.have_nerd_font }
-
-      -- You can configure sections in the statusline by overriding their
-      -- default behavior. For example, here we set the section for
-      -- cursor location to LINE:COLUMN
-      ---@diagnostic disable-next-line: duplicate-set-field
-      -- statusline.section_location = function()
-      --   return '%2l:%-2v'
-      -- end
-
-      -- ... and there is more!
-      --  Check out: https://github.com/echasnovski/mini.nvim
     end,
   },
   { -- Highlight, edit, and navigate code
