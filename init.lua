@@ -167,6 +167,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- folds using treesitter
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldenable = false -- do not fold by default
+vim.opt.foldtext = '' -- "transparent folds - just text with syntax highlight"
+vim.opt.fillchars = 'fold: '
+
 require 'mihd.git-commands'
 
 -- [[ Install `lazy.nvim` plugin manager ]]
