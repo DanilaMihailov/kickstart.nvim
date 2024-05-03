@@ -1054,8 +1054,7 @@ require('lazy').setup({
   {
     'nvim-neotest/neotest',
     dependencies = {
-      -- pin nio verison for now https://github.com/nvim-neotest/neotest/issues/402#issuecomment-2089636675
-      { 'nvim-neotest/nvim-nio', version = '1.9.0' },
+      'nvim-neotest/nvim-nio',
       'nvim-lua/plenary.nvim',
       'antoinemadec/FixCursorHold.nvim',
       'nvim-treesitter/nvim-treesitter',
