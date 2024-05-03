@@ -213,6 +213,15 @@ require('lazy').setup({
     end,
   },
 
+  {
+    'rmagatti/auto-session',
+    config = function()
+      require('auto-session').setup {
+        log_level = 'error',
+      }
+    end,
+  },
+
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
   -- keys can be used to configure plugin behavior/loading/etc.
