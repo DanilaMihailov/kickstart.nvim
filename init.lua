@@ -176,6 +176,47 @@ vim.opt.fillchars = 'fold: '
 
 require 'mihd.git-commands'
 
+local termgroup = vim.api.nvim_create_augroup('mytermgroup', { clear = true })
+vim.api.nvim_create_autocmd('TermOpen', {
+  pattern = '*',
+  group = termgroup,
+  desc = 'Hide line numbers in terminal',
+  callback = function()
+    vim.opt_local.relativenumber = false
+    vim.opt_local.number = false
+    vim.opt_local.signcolumn = 'no'
+    vim.opt_local.cursorline = false
+  end,
+})
+
+vim.opt.wildmode = 'longest:full,list:longest,full' -- complete longest string
+vim.o.wildignorecase = true -- ignore file names and dirs case when completing
+
+-- Jump to last edit position on opening file
+-- https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
+vim.cmd [[
+augroup mygrouplastposition
+    autocmd!
+    au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+augroup end
+]]
+
+vim.keymap.set('t', '<C-W>N', '<C-\\><C-n>', { desc = 'Change terminal mode to normal as in vim' })
+vim.keymap.set('t', '<C-W>n', '<C-\\><C-n>', { desc = 'Change terminal mode to normal as in vim' })
+vim.keymap.set('t', '<C-W>', '<C-\\><C-N><C-w>', { desc = 'Move out of terminal as if it is just a window' })
+
+-- vim.keymap.set('n', '<leader>-', ':wincmd _<cr>:wincmd \\|<cr>', { desc = 'Zoom on pane' })
+-- vim.keymap.set('n', '<leader>=', ':wincmd =<cr>', { desc = 'Rebalance panes' })
+
+-- Search results centered please
+vim.keymap.set('n', 'n', 'nzz', { silent = true, desc = 'n, but centered' })
+vim.keymap.set('n', 'N', 'Nzz', { silent = true, desc = 'N, but centered' })
+vim.keymap.set('n', '*', '*zz', { silent = true, desc = '*, but centered' })
+vim.keymap.set('n', '#', '#zz', { silent = true, desc = '#, but centered' })
+vim.keymap.set('n', 'g*', 'g*zz', { silent = true, desc = 'g*, but centered' })
+
+vim.keymap.set('n', '<C-x><C-f>', ':e <C-R>=expand("%:p:h") . "/" <CR>', { desc = 'Open new file adjacent to current file like emacs' })
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
