@@ -915,6 +915,7 @@ require('lazy').setup({
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-buffer',
       'onsails/lspkind.nvim',
+      { 'petertriho/cmp-git', dependencies = { 'nvim-lua/plenary.nvim' } },
     },
     config = function()
       -- See `:help cmp`
@@ -922,6 +923,11 @@ require('lazy').setup({
       local luasnip = require 'luasnip'
       local lspkind = require 'lspkind'
       luasnip.config.setup {}
+      require('cmp_git').setup {
+        gitlab = {
+          hosts = { 'gitlab.clabs.net' },
+        },
+      }
 
       cmp.setup {
         view = {
@@ -990,6 +996,7 @@ require('lazy').setup({
           { name = 'nvim_lsp' },
           { name = 'nvim_lsp_signature_help' },
           { name = 'luasnip' },
+          { name = 'git' },
           { name = 'path' },
           {
             name = 'buffer',
