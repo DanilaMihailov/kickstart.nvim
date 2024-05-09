@@ -34,9 +34,9 @@ vim.opt.path = vim.opt.path + '**,.,,'
 vim.o.shell = '/bin/zsh' -- use zsh as default shell
 
 -- use ripgrep for :grep command
-if vim.fn.executable 'rg' == 1 then
-  vim.o.grepprg = 'rg --vimgrep --hidden'
-end
+-- if vim.fn.executable 'rg' == 1 then
+--   vim.o.grepprg = 'rg --vimgrep --hidden'
+-- end
 
 vim.cmd [[
 augroup mygroupft
