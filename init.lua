@@ -1255,6 +1255,7 @@ require('lazy').setup({
       'nvim-treesitter/nvim-treesitter',
       'nvim-neotest/neotest-python',
       'nvim-neotest/neotest-plenary',
+      'jfpedroza/neotest-elixir',
     },
     config = function()
       local neotest = require 'neotest'
@@ -1262,6 +1263,7 @@ require('lazy').setup({
         adapters = {
           require 'neotest-python',
           require 'neotest-plenary',
+          require 'neotest-elixir',
         },
       }
       vim.keymap.set('n', '<leader>rtt', function()
