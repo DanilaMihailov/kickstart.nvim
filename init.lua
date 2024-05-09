@@ -189,8 +189,8 @@ vim.api.nvim_create_autocmd('TermOpen', {
   end,
 })
 
-vim.opt.wildmode = 'longest:full,list:longest,full' -- complete longest string
-vim.o.wildignorecase = true -- ignore file names and dirs case when completing
+-- vim.opt.wildmode = 'longest:full,list:longest,full' -- complete longest string
+-- vim.o.wildignorecase = true -- ignore file names and dirs case when completing
 
 -- Jump to last edit position on opening file
 -- https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
