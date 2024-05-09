@@ -48,6 +48,8 @@ augroup mygroupft
 augroup end
 ]]
 
+vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
+
 -- Make searching better
 vim.opt.gdefault = true -- Never have to type /g at the end of search / replace again
 
