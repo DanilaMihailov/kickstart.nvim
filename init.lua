@@ -759,6 +759,12 @@ require('lazy').setup({
   },
 
   {
+    'folke/trouble.nvim',
+    branch = 'dev', -- IMPORTANT!
+    opts = {}, -- for default options, refer to the configuration section for custom setup.
+  },
+
+  {
     'elixir-tools/elixir-tools.nvim',
     version = '*',
     event = { 'BufReadPre', 'BufNewFile' },
