@@ -178,7 +178,7 @@ vim.opt.foldenable = false -- do not fold by default
 vim.opt.foldtext = '' -- "transparent folds - just text with syntax highlight"
 vim.opt.fillchars = 'fold: '
 
-require 'mihd.git-commands'
+-- require 'mihd.git-commands'
 require 'mihd.beacon'
 
 -- Switch between tabs
@@ -316,7 +316,7 @@ require('lazy').setup({
         ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
         ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
         ['<leader><leader>'] = { name = '[ ] Additional commands', _ = 'which_key_ignore' },
-        ['<leader><leader>g'] = { name = '[G]it commands', _ = 'which_key_ignore' },
+        -- ['<leader><leader>g'] = { name = '[G]it commands', _ = 'which_key_ignore' },
         ['<leader><leader>b'] = { name = '[B]uffer commands', _ = 'which_key_ignore' },
       }
       -- visual mode
@@ -409,13 +409,11 @@ require('lazy').setup({
       'sindrets/diffview.nvim', -- optional - Diff integration
       'nvim-telescope/telescope.nvim', -- optional
     },
+    ---@type NeogitConfig
     opts = {
-      kind = 'auto',
+      graph_style = 'unicode',
+      kind = 'tab',
       disable_line_numbers = false,
-      integrations = {
-        telescope = true,
-        diffview = true,
-      },
       signs = {
         hunk = { '', '' },
         item = { '', '' },
@@ -443,6 +441,13 @@ require('lazy').setup({
       },
     },
     config = true,
+    init = function()
+      local neogit = require 'neogit'
+      -- override fugitive command (use :Git for fugitive)
+      vim.api.nvim_create_user_command('G', function()
+        neogit.open()
+      end, {})
+    end,
   },
 }, {
   -- defaults = {
