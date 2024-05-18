@@ -21,7 +21,7 @@ return {
 
       local gruvbox = require 'gruvbox'
       gruvbox.setup {
-        -- contrast = '',
+        contrast = 'hard',
         -- dim_inactive = false,
         -- transparent_mode = true,
         overrides = {
@@ -31,17 +31,10 @@ return {
           GruvboxBlueSign = { bg = 'NONE' },
           GruvboxAquaSign = { bg = 'NONE' },
           GruvboxGreenSign = { bg = 'NONE' },
-
-          -- hide end of buffer '~' symbol
-          EndOfBuffer = { fg = gruvbox.palette.dark0 },
         },
       }
       vim.cmd.colorscheme 'gruvbox'
       vim.opt.background = 'dark'
-
-      -- fix cursorline highlight breaking on operators
-      vim.cmd.hi 'Operator ctermbg=NONE guibg=NONE'
-      vim.cmd.hi 'Quote ctermbg=NONE guibg=NONE'
     end,
   },
 }
