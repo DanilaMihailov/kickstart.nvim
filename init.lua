@@ -393,7 +393,61 @@ require('lazy').setup({
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
   { import = 'custom.plugins' },
+  {
+    'stevearc/oil.nvim',
+    opts = {},
+    -- Optional dependencies
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    init = function()
+      vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
+    end,
+  },
+  {
+    'NeogitOrg/neogit',
+    dependencies = {
+      'nvim-lua/plenary.nvim', -- required
+      'sindrets/diffview.nvim', -- optional - Diff integration
+      'nvim-telescope/telescope.nvim', -- optional
+    },
+    opts = {
+      kind = 'auto',
+      disable_line_numbers = false,
+      integrations = {
+        telescope = true,
+        diffview = true,
+      },
+      signs = {
+        hunk = { '', '' },
+        item = { '', '' },
+        section = { '', '' },
+      },
+      status = {
+        mode_padding = 1,
+        mode_text = {
+          M = 'M',
+          N = 'N',
+          A = 'A',
+          D = 'D',
+          C = 'C',
+          U = 'U',
+          R = 'R',
+          DD = 'DD',
+          AU = 'AU',
+          UD = 'UD',
+          UA = 'UA',
+          DU = 'DU',
+          AA = 'AA',
+          UU = 'UU',
+          ['?'] = '?',
+        },
+      },
+    },
+    config = true,
+  },
 }, {
+  -- defaults = {
+  --   lazy = true,
+  -- },
   ui = {
     border = 'shadow',
     -- If you are using a Nerd Font: set icons to an empty table which will use the
