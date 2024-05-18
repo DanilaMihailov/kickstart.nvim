@@ -403,10 +403,17 @@ require('lazy').setup({
     end,
   },
   {
+    'sindrets/diffview.nvim',
+    ---@type DiffViewOptions
+    opts = {
+      enhanced_diff_hl = true,
+    },
+  },
+  {
     'NeogitOrg/neogit',
     dependencies = {
       'nvim-lua/plenary.nvim', -- required
-      'sindrets/diffview.nvim', -- optional - Diff integration
+      'sindrets/diffview.nvim',
       'nvim-telescope/telescope.nvim', -- optional
     },
     ---@type NeogitConfig
