@@ -19,6 +19,10 @@ return {
     },
     ---@type NeogitConfig
     opts = {
+      highlight = {
+        bold = false,
+        italic = false,
+      },
       disable_context_highlighting = true,
       graph_style = 'unicode',
       kind = 'tab',
