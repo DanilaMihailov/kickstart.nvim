@@ -1,5 +1,6 @@
 return {
   'elixir-tools/elixir-tools.nvim',
+  enabled = false,
   version = '*',
   event = { 'BufReadPre', 'BufNewFile' },
   config = function()
@@ -24,7 +25,8 @@ return {
           -- vim.keymap.set('v', '<space>em', ':ElixirExpandMacro<cr>', { buffer = true, noremap = true })
         end,
       },
-      credo = { enable = true },
+      -- if there is no version, it is going to curl to the repo!
+      credo = { enable = true, version = '0.3.0' },
       elixirls = {
         enable = true,
         settings = elixirls.settings {
