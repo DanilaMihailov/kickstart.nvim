@@ -9,6 +9,9 @@ return {
     opts = {
       enhanced_diff_hl = true,
     },
+    init = function()
+      vim.opt.fillchars:append { diff = '╱' }
+    end,
   },
   { -- git status, branch, commit, merge, etc
     'NeogitOrg/neogit',
@@ -19,6 +22,7 @@ return {
     },
     ---@type NeogitConfig
     opts = {
+      disable_hint = true,
       highlight = {
         bold = false,
         italic = false,
@@ -27,12 +31,15 @@ return {
       graph_style = 'unicode',
       kind = 'tab',
       disable_line_numbers = false,
+      disable_relative_line_numbers = false,
       signs = {
         hunk = { '', '' },
         item = { '', '' },
         section = { '', '' },
       },
       status = {
+        HEAD_padding = 0,
+        show_head_commit_hash = false,
         mode_padding = 1,
         mode_text = {
           M = 'M',
