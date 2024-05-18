@@ -101,7 +101,8 @@ return {
     dependencies = {
       'nvim-telescope/telescope-fzf-native.nvim',
     },
-    init = function()
+    config = function()
+      require('dropbar').setup()
       vim.cmd.hi 'WinBarNC ctermbg=NONE guibg=NONE'
     end,
   },
