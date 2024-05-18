@@ -411,6 +411,7 @@ require('lazy').setup({
     },
     ---@type NeogitConfig
     opts = {
+      disable_context_highlighting = true,
       graph_style = 'unicode',
       kind = 'tab',
       disable_line_numbers = false,
