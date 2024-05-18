@@ -256,7 +256,6 @@ require('lazy').setup({
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   'danilamihailov/vim-tips-wiki',
 
-  'tpope/vim-fugitive',
   -- 'tpope/vim-surround', -- Surrond with braces ysB
   'tpope/vim-repeat', -- enable repeat for tpope's plugins
   'tpope/vim-unimpaired', -- ]b for next buffer, ]e for exchange line, etc
@@ -384,8 +383,6 @@ require('lazy').setup({
   -- require 'kickstart.plugins.indent_line',
   require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
-  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
@@ -400,61 +397,6 @@ require('lazy').setup({
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     init = function()
       vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
-    end,
-  },
-  {
-    'sindrets/diffview.nvim',
-    ---@type DiffViewOptions
-    opts = {
-      enhanced_diff_hl = true,
-    },
-  },
-  {
-    'NeogitOrg/neogit',
-    dependencies = {
-      'nvim-lua/plenary.nvim', -- required
-      'sindrets/diffview.nvim',
-      'nvim-telescope/telescope.nvim', -- optional
-    },
-    ---@type NeogitConfig
-    opts = {
-      disable_context_highlighting = true,
-      graph_style = 'unicode',
-      kind = 'tab',
-      disable_line_numbers = false,
-      signs = {
-        hunk = { '', '' },
-        item = { '', '' },
-        section = { '', '' },
-      },
-      status = {
-        mode_padding = 1,
-        mode_text = {
-          M = 'M',
-          N = 'N',
-          A = 'A',
-          D = 'D',
-          C = 'C',
-          U = 'U',
-          R = 'R',
-          DD = 'DD',
-          AU = 'AU',
-          UD = 'UD',
-          UA = 'UA',
-          DU = 'DU',
-          AA = 'AA',
-          UU = 'UU',
-          ['?'] = '?',
-        },
-      },
-    },
-    config = true,
-    init = function()
-      local neogit = require 'neogit'
-      -- override fugitive command (use :Git for fugitive)
-      vim.api.nvim_create_user_command('G', function()
-        neogit.open()
-      end, {})
     end,
   },
 }, {

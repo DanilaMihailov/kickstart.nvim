@@ -1,10 +1,66 @@
--- Adds git related signs to the gutter, as well as utilities for managing changes
--- NOTE: gitsigns is already included in init.lua but contains only the base
--- config. This will add also the recommended keymaps.
-
+-- all git integrations live here (signs, status, diffview)
 return {
-  {
+  -- keeping for git blame
+  'tpope/vim-fugitive',
+
+  { -- better diff/merge tool
+    'sindrets/diffview.nvim',
+    ---@type DiffViewOptions
+    opts = {
+      enhanced_diff_hl = true,
+    },
+  },
+  { -- git status, branch, commit, merge, etc
+    'NeogitOrg/neogit',
+    dependencies = {
+      'nvim-lua/plenary.nvim', -- required
+      'sindrets/diffview.nvim',
+      'nvim-telescope/telescope.nvim', -- optional
+    },
+    ---@type NeogitConfig
+    opts = {
+      disable_context_highlighting = true,
+      graph_style = 'unicode',
+      kind = 'tab',
+      disable_line_numbers = false,
+      signs = {
+        hunk = { '', '' },
+        item = { '', '' },
+        section = { '', '' },
+      },
+      status = {
+        mode_padding = 1,
+        mode_text = {
+          M = 'M',
+          N = 'N',
+          A = 'A',
+          D = 'D',
+          C = 'C',
+          U = 'U',
+          R = 'R',
+          DD = 'DD',
+          AU = 'AU',
+          UD = 'UD',
+          UA = 'UA',
+          DU = 'DU',
+          AA = 'AA',
+          UU = 'UU',
+          ['?'] = '?',
+        },
+      },
+    },
+    config = true,
+    init = function()
+      local neogit = require 'neogit'
+      -- override fugitive command (use :Git for fugitive)
+      vim.api.nvim_create_user_command('G', function()
+        neogit.open()
+      end, {})
+    end,
+  },
+  { -- gutters, hunks
     'lewis6991/gitsigns.nvim',
+    ---@type Gitsigns.Config
     opts = {
       on_attach = function(bufnr)
         local gitsigns = require 'gitsigns'
