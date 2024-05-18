@@ -179,6 +179,16 @@ vim.opt.foldtext = '' -- "transparent folds - just text with syntax highlight"
 vim.opt.fillchars = 'fold: '
 
 require 'mihd.git-commands'
+require 'mihd.beacon'
+
+-- Switch between tabs
+vim.keymap.set('n', '<A-l>', function()
+  vim.api.nvim_feedkeys('gt', 'n', true)
+end, { desc = 'Next tab' })
+
+vim.keymap.set('n', '<A-h>', function()
+  vim.api.nvim_feedkeys('gT', 'n', true)
+end, { desc = 'Previous tab' })
 
 local termgroup = vim.api.nvim_create_augroup('mytermgroup', { clear = true })
 vim.api.nvim_create_autocmd('TermOpen', {
