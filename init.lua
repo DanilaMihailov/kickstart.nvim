@@ -31,6 +31,11 @@ vim.opt.langmap =
 -- ,, - relative from current in same dir
 vim.opt.path = vim.opt.path + '**,.,,'
 
+vim.g.loaded_python3_provider = false
+vim.g.loaded_ruby_provider = false
+vim.g.loaded_perl_provider = false
+vim.g.loaded_node_provider = false
+
 vim.o.shell = '/bin/zsh' -- use zsh as default shell
 
 -- use ripgrep for :grep command
