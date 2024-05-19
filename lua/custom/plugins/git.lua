@@ -51,7 +51,6 @@ return {
         },
       },
       status = {
-        HEAD_padding = 0,
         show_head_commit_hash = false,
         mode_padding = 1,
         mode_text = {
@@ -81,6 +80,16 @@ return {
       vim.api.nvim_create_user_command('G', function()
         neogit.open()
       end, {})
+
+      vim.cmd [[
+        hi! link NeogitSectionHeader @attribute
+        hi! link NeogitSectionHeaderCount @number
+        hi! link NeogitTagDistance @number
+        hi! link NeogitStatusHEAD @label
+        hi! link NeogitChangeUntrackeduntracked @operator
+        hi! link NeogitObjectId @string.special.symbol
+        hi! link NeogitWinSeparator WinSeparator
+      ]]
     end,
   },
   { -- gutters, hunks

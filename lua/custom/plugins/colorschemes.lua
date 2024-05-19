@@ -34,12 +34,6 @@ return {
       vim.opt.background = 'dark'
       vim.cmd [[
         hi FoldColumn guibg=NONE
-        hi! link NeogitSectionHeader GruvboxAqua
-        hi! link NeogitSectionHeaderCount GruvboxPurple
-        hi! link NeogitStatusHEAD GruvboxRed
-        hi! link NeogitChangeUntrackeduntracked GruvboxOrange
-        hi! link NeogitObjectId GruvboxBlue
-        hi! link NeogitWinSeparator WinSeparator
       ]]
     end,
   },
