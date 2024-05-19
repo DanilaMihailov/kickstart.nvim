@@ -31,6 +31,8 @@ return {
           GruvboxBlueSign = { bg = 'NONE' },
           GruvboxAquaSign = { bg = 'NONE' },
           GruvboxGreenSign = { bg = 'NONE' },
+          -- hide end of buffer '~' symbol
+          EndOfBuffer = { fg = gruvbox.palette.dark0 },
         },
       }
       vim.cmd.colorscheme 'gruvbox'
