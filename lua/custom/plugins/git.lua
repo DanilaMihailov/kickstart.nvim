@@ -14,8 +14,8 @@ return {
     end,
   },
   { -- git status, branch, commit, merge, etc
-    -- 'NeogitOrg/neogit',
-    dir = '~/personal/nvim-plugins/neogit/',
+    'NeogitOrg/neogit',
+    -- dir = '~/personal/nvim-plugins/neogit/',
     dependencies = {
       'nvim-lua/plenary.nvim', -- required
       'sindrets/diffview.nvim',
@@ -45,11 +45,14 @@ return {
         untracked = {
           folded = true,
         },
+        unmerged_upstream = {
+          folded = true
+        },
       },
       status = {
         HEAD_padding = 0,
         show_head_commit_hash = false,
-        mode_padding = 0,
+        mode_padding = 1,
         mode_text = {
           M = 'M',
           N = 'N',
