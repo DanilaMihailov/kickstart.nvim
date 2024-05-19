@@ -258,7 +258,7 @@ require('lazy').setup({
 
   -- 'tpope/vim-surround', -- Surrond with braces ysB
   'tpope/vim-repeat', -- enable repeat for tpope's plugins
-  'tpope/vim-unimpaired', -- ]b for next buffer, ]e for exchange line, etc
+  { 'tpope/vim-unimpaired', keys = { '[', ']' } }, -- ]b for next buffer, ]e for exchange line, etc
   { -- Bdelete [other, hidden, this]
     'Asheq/close-buffers.vim',
     config = function()
@@ -277,7 +277,7 @@ require('lazy').setup({
   --    require('Comment').setup({})
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'numToStr/Comment.nvim', opts = {}, keys = { 'gc' } },
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
@@ -394,7 +394,6 @@ require('lazy').setup({
   { import = 'custom.plugins' },
   {
     'stevearc/oil.nvim',
-    keys = { '-' },
     cmd = 'Oil',
     opts = {},
     -- Optional dependencies
