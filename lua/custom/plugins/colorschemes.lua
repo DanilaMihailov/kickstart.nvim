@@ -20,6 +20,7 @@ return {
         overrides = {
           LspSignatureActiveParameter = { link = 'Visual' },
           SignColumn = { bg = 'NONE' },
+          DiffText = { bg = gruvbox.palette.faded_blue, fg = 'None' },
           GruvboxRedSign = { bg = 'NONE' },
           GruvboxYellowSign = { bg = 'NONE' },
           GruvboxBlueSign = { bg = 'NONE' },
