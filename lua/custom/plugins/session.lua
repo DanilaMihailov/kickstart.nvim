@@ -43,7 +43,7 @@ return {
   config = function()
     require('auto-session').setup {
       log_level = 'error',
-      pre_save_cmds = { 'NvimTreeClose' },
+      pre_save_cmds = { 'NvimTreeClose', 'NeogitClose' },
     }
   end,
 }

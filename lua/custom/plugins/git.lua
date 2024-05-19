@@ -25,10 +25,6 @@ return {
     ---@type NeogitConfig
     opts = {
       disable_hint = true,
-      highlight = {
-        bold = false,
-        italic = false,
-      },
       git_services = {
         ['gitlab.clabs.net'] = 'https://gitlab.clabs.net/${owner}/${repository}/merge_requests/new?merge_request[source_branch]=${branch_name}&merge_request[target_branch]=master',
       },
@@ -72,13 +68,17 @@ return {
         },
       },
     },
-    cmd = { 'G', 'Neogit' },
+    cmd = { 'G', 'Neogit', 'NeogitClose' },
     config = function(plug, opts)
       local neogit = require 'neogit'
       neogit.setup(opts)
       -- override fugitive command (use :Git for fugitive)
       vim.api.nvim_create_user_command('G', function()
         neogit.open()
+      end, {})
+
+      vim.api.nvim_create_user_command('NeogitClose', function()
+        neogit.close()
       end, {})
 
       vim.cmd [[
@@ -88,6 +88,16 @@ return {
         hi! link NeogitStatusHEAD @label
         hi! link NeogitChangeUntrackeduntracked @operator
         hi! link NeogitObjectId @string.special.symbol
+        hi! link NeogitFilePath @string.special.path
+
+        hi! link NeogitDiffAdd @diff.plus
+        hi! link NeogitDiffAdditions @diff.plus
+        hi! link NeogitDiffAddHighlight @diff.plus
+
+        hi! link NeogitDiffDelete @diff.minus
+        hi! link NeogitDiffDeletions @diff.minus
+        hi! link NeogitDiffDeleteHighlight @diff.minus
+
         hi! link NeogitWinSeparator WinSeparator
       ]]
     end,
