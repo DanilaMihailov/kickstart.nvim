@@ -14,7 +14,8 @@ return {
     end,
   },
   { -- git status, branch, commit, merge, etc
-    'NeogitOrg/neogit',
+    -- 'NeogitOrg/neogit',
+    dir = '~/personal/nvim-plugins/neogit/',
     dependencies = {
       'nvim-lua/plenary.nvim', -- required
       'sindrets/diffview.nvim',
@@ -27,9 +28,12 @@ return {
         bold = false,
         italic = false,
       },
+      git_services = {
+        ['gitlab.clabs.net'] = 'https://gitlab.clabs.net/${owner}/${repository}/merge_requests/new?merge_request[source_branch]=${branch_name}&merge_request[target_branch]=master',
+      },
       disable_context_highlighting = true,
       graph_style = 'unicode',
-      kind = 'tab',
+      kind = 'split',
       disable_line_numbers = false,
       disable_relative_line_numbers = false,
       signs = {
@@ -40,7 +44,7 @@ return {
       status = {
         HEAD_padding = 0,
         show_head_commit_hash = false,
-        mode_padding = 1,
+        mode_padding = 0,
         mode_text = {
           M = 'M',
           N = 'N',
