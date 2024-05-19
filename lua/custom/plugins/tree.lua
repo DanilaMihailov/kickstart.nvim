@@ -3,6 +3,7 @@ return {
   dependencies = {
     'nvim-tree/nvim-web-devicons', -- optional, for file icons
   },
+  keys = '\\',
   config = function()
     local nvim_tree = require 'nvim-tree'
     local nvim_tree_api = require 'nvim-tree.api'

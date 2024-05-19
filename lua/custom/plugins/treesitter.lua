@@ -2,6 +2,7 @@ return {
 
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
+    event = { 'BufReadPre' },
     build = ':TSUpdate',
     opts = {
       ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
@@ -34,6 +35,7 @@ return {
   },
   {
     'nvim-treesitter/nvim-treesitter-context',
+    event = { 'BufReadPre' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = function()
       local context = require 'treesitter-context'
@@ -98,6 +100,7 @@ return {
   },
   {
     'Bekaboo/dropbar.nvim',
+    event = { 'BufReadPre' },
     -- optional, but required for fuzzy finder support
     dependencies = {
       'nvim-telescope/telescope-fzf-native.nvim',

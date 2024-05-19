@@ -1,11 +1,12 @@
 -- all git integrations live here (signs, status, diffview)
 return {
   -- keeping for git blame
-  'tpope/vim-fugitive',
+  { 'tpope/vim-fugitive', cmd = { 'Git' } },
 
   { -- better diff/merge tool
     'sindrets/diffview.nvim',
     ---@type DiffViewOptions
+    cmd = { 'DiffviewOpen', 'DiffviewFileHistory' },
     opts = {
       enhanced_diff_hl = true,
     },
@@ -46,7 +47,7 @@ return {
           folded = true,
         },
         unmerged_upstream = {
-          folded = true
+          folded = true,
         },
       },
       status = {
@@ -72,9 +73,10 @@ return {
         },
       },
     },
-    config = true,
-    init = function()
+    cmd = { 'G', 'Neogit' },
+    config = function(plug, opts)
       local neogit = require 'neogit'
+      neogit.setup(opts)
       -- override fugitive command (use :Git for fugitive)
       vim.api.nvim_create_user_command('G', function()
         neogit.open()
@@ -83,6 +85,7 @@ return {
   },
   { -- gutters, hunks
     'lewis6991/gitsigns.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
     ---@type Gitsigns.Config
     opts = {
       on_attach = function(bufnr)

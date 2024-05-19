@@ -1,4 +1,6 @@
 return {
+  cmd = 'Neotest',
+  keys = { '<leader>rt' },
   'nvim-neotest/neotest',
   dependencies = {
     'nvim-neotest/nvim-nio',

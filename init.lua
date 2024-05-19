@@ -334,11 +334,13 @@ require('lazy').setup({
 
   {
     'folke/trouble.nvim',
+    cmd = 'Trouble',
     branch = 'dev', -- IMPORTANT!
     opts = {}, -- for default options, refer to the configuration section for custom setup.
   },
   {
     'danymat/neogen',
+    cmd = 'Neogen',
     config = true,
     opts = {
       snippet_engine = 'luasnip',
@@ -381,7 +383,7 @@ require('lazy').setup({
   --
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
-  require 'kickstart.plugins.lint',
+  -- require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
@@ -392,6 +394,8 @@ require('lazy').setup({
   { import = 'custom.plugins' },
   {
     'stevearc/oil.nvim',
+    keys = { '-' },
+    cmd = 'Oil',
     opts = {},
     -- Optional dependencies
     dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -425,6 +429,13 @@ require('lazy').setup({
   },
   checker = {
     enable = true,
+  },
+  profiling = {
+    -- Enables extra stats on the debug tab related to the loader cache.
+    -- Additionally gathers stats about all package.loaders
+    loader = false,
+    -- Track each new require in the Lazy profiling tab
+    require = false,
   },
 })
 
