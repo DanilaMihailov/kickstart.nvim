@@ -32,7 +32,7 @@ return {
           GruvboxAquaSign = { bg = 'NONE' },
           GruvboxGreenSign = { bg = 'NONE' },
           -- hide end of buffer '~' symbol
-          EndOfBuffer = { fg = gruvbox.palette.dark0 },
+          EndOfBuffer = { fg = gruvbox.palette.dark0_hard },
         },
       }
       vim.cmd.colorscheme 'gruvbox'
@@ -44,6 +44,7 @@ return {
         hi! link NeogitStatusHEAD GruvboxRed
         hi! link NeogitChangeUntrackeduntracked GruvboxOrange
         hi! link NeogitObjectId GruvboxBlue
+        hi! link NeogitWinSeparator WinSeparator
       ]]
     end,
   },
