@@ -34,12 +34,17 @@ return {
       disable_context_highlighting = true,
       graph_style = 'unicode',
       kind = 'split',
-      disable_line_numbers = false,
-      disable_relative_line_numbers = false,
+      -- disable_line_numbers = false,
+      -- disable_relative_line_numbers = false,
       signs = {
         hunk = { '', '' },
         item = { '', '' },
         section = { '', '' },
+      },
+      sections = {
+        untracked = {
+          folded = true,
+        },
       },
       status = {
         HEAD_padding = 0,
