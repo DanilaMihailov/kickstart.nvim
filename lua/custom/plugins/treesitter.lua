@@ -46,6 +46,7 @@ return {
     end,
   },
   {
+    enabled = false, -- for now, until patched
     'nvim-treesitter/nvim-treesitter-textobjects',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = function()
