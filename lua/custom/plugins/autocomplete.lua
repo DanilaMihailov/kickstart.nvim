@@ -45,6 +45,7 @@ return { -- Autocompletion
     local lspkind = require 'lspkind'
     luasnip.config.setup {}
     require('cmp_git').setup {
+      filetypes = { 'gitcommit', 'octo', 'NeogitCommitMessage', 'markdown' },
       gitlab = {
         hosts = { 'gitlab.clabs.net' },
       },
@@ -80,23 +81,11 @@ return { -- Autocompletion
         --  This will expand snippets if the LSP sent a snippet.
         ['<C-y>'] = cmp.mapping.confirm { select = true },
 
-        -- If you prefer more traditional completion keymaps,
-        -- you can uncomment the following lines
-        --['<CR>'] = cmp.mapping.confirm { select = true },
-        --['<Tab>'] = cmp.mapping.select_next_item(),
-        --['<S-Tab>'] = cmp.mapping.select_prev_item(),
-
         -- Manually trigger a completion from nvim-cmp.
         --  Generally you don't need this, because nvim-cmp will display
         --  completions whenever it has completion options available.
         ['<C-Space>'] = cmp.mapping.complete {},
 
-        -- Think of <c-l> as moving to the right of your snippet expansion.
-        --  So if you have a snippet that's like:
-        --  function $name($args)
-        --    $body
-        --  end
-        --
         -- <c-l> will move you to the right of each of the expansion locations.
         -- <c-h> is similar, except moving you backwards.
         ['<C-l>'] = cmp.mapping(function()
@@ -110,8 +99,11 @@ return { -- Autocompletion
           end
         end, { 'i', 's' }),
 
-        -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
-        --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
+        vim.keymap.set({ 'i', 's' }, '<C-E>', function()
+          if luasnip.choice_active() then
+            luasnip.change_choice(1)
+          end
+        end, { silent = true }),
       },
       sources = {
         { name = 'nvim_lsp' },
@@ -122,6 +114,7 @@ return { -- Autocompletion
         {
           name = 'buffer',
           option = {
+            -- get completions from all open buffers
             get_bufnrs = function()
               local bufs = {}
               for _, win in ipairs(vim.api.nvim_list_wins()) do
