@@ -184,7 +184,7 @@ vim.opt.foldtext = '' -- "transparent folds - just text with syntax highlight"
 vim.opt.fillchars = 'fold: '
 
 -- require 'mihd.git-commands'
-require 'mihd.beacon'
+-- require 'mihd.beacon'
 
 -- Switch between tabs
 vim.keymap.set('n', '<A-l>', function()

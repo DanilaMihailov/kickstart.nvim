@@ -8,8 +8,6 @@ return {
         return
       end
 
-      vim.notify('Restoring session', vim.log.levels.INFO, { title = 'AutoSession' })
-
       vim.schedule(function()
         require('auto-session').AutoRestoreSession()
       end)
@@ -44,6 +42,9 @@ return {
     require('auto-session').setup {
       log_level = 'error',
       pre_save_cmds = { 'NvimTreeClose', 'NeogitClose' },
+      session_lens = {
+        load_on_setup = false,
+      },
     }
   end,
 }
