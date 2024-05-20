@@ -282,7 +282,8 @@ require('lazy').setup({
   --    require('Comment').setup({})
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {}, keys = { 'gc' } },
+  -- disable for now, use builtin
+  -- { 'numToStr/Comment.nvim', opts = {}, keys = { 'gc' } },
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
