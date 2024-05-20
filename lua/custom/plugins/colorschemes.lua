@@ -10,9 +10,12 @@ return {
   {
     'ellisonleao/gruvbox.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
-    init = function()
+    config = function()
       local gruvbox = require 'gruvbox'
       gruvbox.setup {
+        palette_overrides = {
+          dark0_hard = '#1c1c1c',
+        },
         contrast = 'hard',
         -- dim_inactive = false,
         -- transparent_mode = true,

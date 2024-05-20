@@ -355,7 +355,7 @@ require('lazy').setup({
   },
 
   -- Highlight todo, notes, etc in comments
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+  { 'folke/todo-comments.nvim', event = 'BufRead', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
@@ -406,6 +406,15 @@ require('lazy').setup({
     init = function()
       vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
     end,
+  },
+  {
+    'brenoprata10/nvim-highlight-colors',
+    event = 'BufRead',
+    opts = {
+      render = 'virtual',
+      enable_tailwind = true,
+      virtual_symbol = '●',
+    },
   },
 }, {
   -- defaults = {
