@@ -21,6 +21,7 @@ return { -- Autoformat
     },
   },
   opts = {
+    log_level = vim.log.levels.DEBUG,
     notify_on_error = true,
     format_on_save = function(bufnr)
       if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
@@ -56,7 +57,30 @@ return { -- Autoformat
       --
       -- You can use a sub-list to tell conform to run *until* a formatter
       -- is found.
-      javascript = { { 'prettierd', 'prettier' } },
+      javascript = { 'prettier' },
+    },
+    formatters = {
+      prettier = {
+        inherit = false,
+        command = 'prettier',
+        args = function(_, ctx)
+          local parser = nil
+          -- kkrm shenanigans
+          local ft_to_parser = {
+            ['.js.ejs'] = 'babel',
+            ['.html.ejs'] = 'html',
+          }
+          for key, value in pairs(ft_to_parser) do
+            if ctx.filename:find(key) then
+              parser = { '--parser', value }
+            end
+          end
+          return parser or { '--stdin-filepath', '$FILENAME' }
+        end,
+        -- NOTE: range_args not really working for prettier
+        -- https://github.com/stevearc/conform.nvim/pull/322
+        range_args = nil,
+      },
     },
   },
   init = function()

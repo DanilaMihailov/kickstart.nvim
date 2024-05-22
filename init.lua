@@ -321,7 +321,7 @@ require('lazy').setup({
         ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
         ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
         ['<leader><leader>'] = { name = '[ ] Additional commands', _ = 'which_key_ignore' },
-        -- ['<leader><leader>g'] = { name = '[G]it commands', _ = 'which_key_ignore' },
+        ['<leader><leader>g'] = { name = '[G]it commands', _ = 'which_key_ignore' },
         ['<leader><leader>b'] = { name = '[B]uffer commands', _ = 'which_key_ignore' },
       }
       -- visual mode
