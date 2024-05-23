@@ -1,7 +1,7 @@
 -- all git integrations live here (signs, status, diffview)
 return {
   -- keeping for git blame
-  { 'tpope/vim-fugitive', cmd = { 'Git', 'G' } },
+  { 'tpope/vim-fugitive', cmd = { 'Git' } },
 
   { -- better diff/merge tool
     'sindrets/diffview.nvim',
@@ -68,7 +68,7 @@ return {
         },
       },
     },
-    cmd = { 'Neogit', 'NeogitClose' },
+    cmd = { 'Neogit', 'NeogitClose', 'G' },
     config = function(plug, opts)
       local neogit = require 'neogit'
       neogit.setup(opts)
