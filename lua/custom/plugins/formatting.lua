@@ -1,3 +1,10 @@
+--- Passed to vim.lsp.buf.format
+---@param client vim.lsp.Client
+---@return boolean
+local formatFilter = function(client)
+  -- biome is used to format js and json files
+  return client.name ~= 'tsserver' and client.name ~= 'jsonls'
+end
 return { -- Autoformat
   'stevearc/conform.nvim',
   event = { 'BufWritePre' },
@@ -6,7 +13,7 @@ return { -- Autoformat
     {
       '<leader>f',
       function()
-        require('conform').format { async = true, lsp_fallback = true }
+        require('conform').format { async = true, lsp_fallback = true, filter = formatFilter }
       end,
       mode = '',
       desc = '[F]ormat buffer',
@@ -38,6 +45,7 @@ return { -- Autoformat
       return {
         timeout_ms = 500,
         lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+        filter = formatFilter,
       }
     end,
     formatters_by_ft = {
@@ -45,7 +53,6 @@ return { -- Autoformat
       gleam = { 'gleam' },
       toml = { 'taplo' },
       markdown = { 'prettier' },
-      -- Conform can also run multiple formatters sequentially
       python = function()
         -- ruff only works with python3
         if vim.fn.getcwd(-1, -1):find 'kkrm' then
@@ -54,11 +61,6 @@ return { -- Autoformat
           return { 'ruff_fix', 'ruff_format' }
         end
       end,
-      --
-      -- You can use a sub-list to tell conform to run *until* a formatter
-      -- is found.
-      -- javascript = { 'prettier' },
-      javascript = { 'prettier', 'eslint_d' },
       html = { 'prettier' },
     },
     formatters = {
