@@ -144,9 +144,17 @@ return { -- LSP Configuration & Plugins
       -- },
       cssls = {},
       html = {},
-      jsonls = {},
+      jsonls = {
+        autostart = true,
+      },
       yamlls = {},
-      tsserver = {},
+      biome = {},
+      eslint = {
+        autostart = false
+      },
+      tsserver = {
+        autostart = true,
+      },
       emmet_ls = {},
       -- Configure `ruff-lsp`.
       -- See: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#ruff_lsp
