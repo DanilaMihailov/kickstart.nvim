@@ -9,7 +9,37 @@ return {
     custom_gruvbox.replace = custom_gruvbox.normal
     custom_gruvbox.command = custom_gruvbox.normal
 
-    local noice = require 'noice'
+    local line_x = {
+      'encoding',
+      'fileformat',
+      'filetype',
+    }
+
+    local ok_n, noice = pcall(require, 'noice')
+    if ok_n then
+      local noice_comps = {
+        {
+          noice.api.status.message.get_hl,
+          cond = noice.api.status.message.has,
+        },
+        {
+          noice.api.status.command.get,
+          cond = noice.api.status.command.has,
+          color = { fg = '#ff9e64' },
+        },
+        {
+          noice.api.status.mode.get,
+          cond = noice.api.status.mode.has,
+          color = { fg = '#ff9e64' },
+        },
+        {
+          noice.api.status.search.get,
+          cond = noice.api.status.search.has,
+          color = { fg = '#ff9e64' },
+        },
+      }
+      line_x = vim.tbl_extend('force', line_x, noice_comps)
+    end
 
     require('lualine').setup {
       options = {
@@ -25,30 +55,7 @@ return {
         lualine_c = {
           { 'filename', path = 1 },
         },
-        lualine_x = {
-          {
-            noice.api.status.message.get_hl,
-            cond = noice.api.status.message.has,
-          },
-          {
-            noice.api.status.command.get,
-            cond = noice.api.status.command.has,
-            color = { fg = '#ff9e64' },
-          },
-          {
-            noice.api.status.mode.get,
-            cond = noice.api.status.mode.has,
-            color = { fg = '#ff9e64' },
-          },
-          {
-            noice.api.status.search.get,
-            cond = noice.api.status.search.has,
-            color = { fg = '#ff9e64' },
-          },
-          'encoding',
-          'fileformat',
-          'filetype',
-        },
+        lualine_x = line_x,
         lualine_y = { 'progress' },
         lualine_z = { 'location' },
       },
