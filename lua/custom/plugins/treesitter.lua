@@ -45,10 +45,15 @@ return {
       vim.keymap.set('n', '<leader>tc', function()
         context.toggle()
       end, { desc = '[T]oggle Treesitter [C]ontext' })
+
+      vim.keymap.set("n", "<leader>gc", function()
+        require("treesitter-context").go_to_context(vim.v.count1)
+      end, { silent = true, desc = "[G]o to [C]ontext (upper)" })
     end,
   },
   {
     enabled = false, -- for now, until patched
+    event = { 'BufReadPre' },
     'nvim-treesitter/nvim-treesitter-textobjects',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = function()
