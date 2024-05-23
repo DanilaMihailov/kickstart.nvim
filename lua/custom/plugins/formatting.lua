@@ -44,7 +44,7 @@ return { -- Autoformat
       lua = { 'stylua' },
       gleam = { 'gleam' },
       toml = { 'taplo' },
-      markdown = { 'markdownlint' },
+      markdown = { 'prettier' },
       -- Conform can also run multiple formatters sequentially
       python = function()
         -- ruff only works with python3
@@ -57,9 +57,14 @@ return { -- Autoformat
       --
       -- You can use a sub-list to tell conform to run *until* a formatter
       -- is found.
-      javascript = { 'prettier' },
+      -- javascript = { 'prettier' },
+      javascript = { 'prettier', 'eslint_d' },
+      html = { 'prettier' },
     },
     formatters = {
+      eslint_d = {
+        prepend_args = { '-c', 'eslint.config.js' },
+      },
       prettier = {
         inherit = false,
         command = 'prettier',
