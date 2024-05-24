@@ -43,15 +43,13 @@ vim.o.shell = '/bin/zsh' -- use zsh as default shell
 --   vim.o.grepprg = 'rg --vimgrep --hidden'
 -- end
 
-vim.cmd [[
-augroup mygroupft
-  autocmd!
-  " detect filetypes
-  autocmd BufNewFile,BufRead *.js.ejs set filetype=javascript
-  autocmd BufNewFile,BufRead *.json.ejs set filetype=json
-  autocmd BufNewFile,BufRead *.html.ejs set filetype=html
-augroup end
-]]
+vim.filetype.add {
+  pattern = {
+    ['.*%.js%.ejs'] = 'javascript',
+    ['.*%.html%.ejs'] = 'html',
+    ['.*%.json%.ejs'] = 'json',
+  },
+}
 
 vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
 
