@@ -38,7 +38,7 @@ return {
           color = { fg = '#ff9e64' },
         },
       }
-      line_x = vim.tbl_extend('force', line_x, noice_comps)
+      line_x = vim.iter({ noice_comps, line_x }):flatten():totable()
     end
 
     require('lualine').setup {
