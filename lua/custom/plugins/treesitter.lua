@@ -5,7 +5,17 @@ return {
     event = { 'BufReadPre' },
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
+      ensure_installed = {
+        'bash',
+        'c',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'vim',
+        'vimdoc',
+      },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -46,13 +56,12 @@ return {
         context.toggle()
       end, { desc = '[T]oggle Treesitter [C]ontext' })
 
-      vim.keymap.set("n", "<leader>gc", function()
-        require("treesitter-context").go_to_context(vim.v.count1)
-      end, { silent = true, desc = "[G]o to [C]ontext (upper)" })
+      vim.keymap.set('n', '<leader>gc', function()
+        require('treesitter-context').go_to_context(vim.v.count1)
+      end, { silent = true, desc = '[G]o to [C]ontext (upper)' })
     end,
   },
   {
-    enabled = false, -- for now, until patched
     event = { 'BufReadPre' },
     'nvim-treesitter/nvim-treesitter-textobjects',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
