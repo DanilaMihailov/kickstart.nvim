@@ -160,6 +160,10 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+vim.keymap.set('n', 'gh', '_', { desc = 'Move cursor to the begining of line (_)' })
+vim.keymap.set('n', 'gl', '$', { desc = 'Move cursor to the end of line ($)' })
+
+vim.keymap.set('n', '<leader>`', '<C-^>', { desc = 'Switch to other buffer (C-^)' })
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
