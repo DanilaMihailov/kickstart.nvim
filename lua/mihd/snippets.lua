@@ -14,7 +14,7 @@ ls.add_snippets('javascript', {
     fmta(
       [[
     angular.module('kkrm').controller('<name>', function($scope<args>){
-      <in_fn>
+      <body>
     });
     ]],
       {
@@ -26,7 +26,7 @@ ls.add_snippets('javascript', {
           })
         end),
         args = i(2),
-        in_fn = i(0),
+        body = i(0),
       }
     )
   ),
@@ -36,7 +36,7 @@ ls.add_snippets('javascript', {
       [[
     angular.module('kkrm').controller('<name>', <name>);
     function <name> ($scope<args>) {
-      <in_fn>
+      <body>
     };
     ]],
       {
@@ -48,7 +48,7 @@ ls.add_snippets('javascript', {
           })
         end),
         args = i(2),
-        in_fn = i(0),
+        body = i(0),
       },
       { repeat_duplicates = true }
     )
@@ -58,10 +58,10 @@ ls.add_snippets('javascript', {
     fmta(
       [[
     $scope.<name> = function (<args>) {
-      <last>
+      <body>
     };
     ]],
-      { name = i(1, 'name'), args = i(2), last = i(0) }
+      { name = i(1, 'name'), args = i(2), body = i(0) }
     )
   ),
   s(
