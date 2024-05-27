@@ -13,9 +13,9 @@ return {
     config = function()
       local gruvbox = require 'gruvbox'
       gruvbox.setup {
-        palette_overrides = {
-          dark0_hard = '#1c1c1c',
-        },
+        -- palette_overrides = {
+        --   dark0_hard = '#1c1c1c',
+        -- },
         contrast = 'hard',
         -- dim_inactive = false,
         -- transparent_mode = true,

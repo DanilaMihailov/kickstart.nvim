@@ -10,6 +10,9 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
@@ -51,7 +54,8 @@ vim.filetype.add {
   },
 }
 
-vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
+vim.o.sessionoptions =
+  'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
 
 vim.cmd.colorscheme 'retrobox' -- default colorscheme, overriden by plugins
 
@@ -131,7 +135,12 @@ vim.diagnostic.config {
 -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 -- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 -- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set(
+  'n',
+  '<leader>q',
+  vim.diagnostic.setloclist,
+  { desc = 'Open diagnostic [Q]uickfix list' }
+)
 vim.keymap.set('n', '<leader>td', function()
   vim.g.show_diagnostic_virutal_text = not vim.g.show_diagnostic_virutal_text
   vim.diagnostic.config { virtual_text = vim.g.show_diagnostic_virutal_text }
@@ -224,7 +233,12 @@ augroup end
 
 vim.keymap.set('t', '<C-W>N', '<C-\\><C-n>', { desc = 'Change terminal mode to normal as in vim' })
 vim.keymap.set('t', '<C-W>n', '<C-\\><C-n>', { desc = 'Change terminal mode to normal as in vim' })
-vim.keymap.set('t', '<C-W>', '<C-\\><C-N><C-w>', { desc = 'Move out of terminal as if it is just a window' })
+vim.keymap.set(
+  't',
+  '<C-W>',
+  '<C-\\><C-N><C-w>',
+  { desc = 'Move out of terminal as if it is just a window' }
+)
 
 -- vim.keymap.set('n', '<leader>-', ':wincmd _<cr>:wincmd \\|<cr>', { desc = 'Zoom on pane' })
 -- vim.keymap.set('n', '<leader>=', ':wincmd =<cr>', { desc = 'Rebalance panes' })
@@ -236,7 +250,12 @@ vim.keymap.set('n', '*', '*zz', { silent = true, desc = '*, but centered' })
 vim.keymap.set('n', '#', '#zz', { silent = true, desc = '#, but centered' })
 vim.keymap.set('n', 'g*', 'g*zz', { silent = true, desc = 'g*, but centered' })
 
-vim.keymap.set('n', '<C-x><C-f>', ':e <C-R>=expand("%:p:h") . "/" <CR>', { desc = 'Open new file adjacent to current file like emacs' })
+vim.keymap.set(
+  'n',
+  '<C-x><C-f>',
+  ':e <C-R>=expand("%:p:h") . "/" <CR>',
+  { desc = 'Open new file adjacent to current file like emacs' }
+)
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
@@ -269,8 +288,18 @@ require('lazy').setup({
   { -- Bdelete [other, hidden, this]
     'Asheq/close-buffers.vim',
     config = function()
-      vim.keymap.set('n', '<leader><leader>bo', '<cmd>Bdelete other<cr>', { desc = '[B]uffer Delete [O]ther' })
-      vim.keymap.set('n', '<leader><leader>bh', '<cmd>Bdelete hidden<cr>', { desc = '[B]uffer Delete [H]idden' })
+      vim.keymap.set(
+        'n',
+        '<leader><leader>bo',
+        '<cmd>Bdelete other<cr>',
+        { desc = '[B]uffer Delete [O]ther' }
+      )
+      vim.keymap.set(
+        'n',
+        '<leader><leader>bh',
+        '<cmd>Bdelete hidden<cr>',
+        { desc = '[B]uffer Delete [H]idden' }
+      )
     end,
   },
 
@@ -358,7 +387,12 @@ require('lazy').setup({
   },
 
   -- Highlight todo, notes, etc in comments
-  { 'folke/todo-comments.nvim', event = 'BufRead', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+  {
+    'folke/todo-comments.nvim',
+    event = 'BufRead',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    opts = { signs = false },
+  },
 
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
@@ -391,7 +425,7 @@ require('lazy').setup({
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
   -- require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.indent_line',
+  require 'kickstart.plugins.indent_line',
   require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
 

@@ -107,6 +107,7 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     ---@type Gitsigns.Config
     opts = {
+      -- current_line_blame = true,
       on_attach = function(bufnr)
         local gitsigns = require 'gitsigns'
 
@@ -154,9 +155,17 @@ return {
           gitsigns.diffthis '@'
         end, { desc = 'git [D]iff against last commit' })
         -- Toggles
-        map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line' })
+        map(
+          'n',
+          '<leader>tb',
+          gitsigns.toggle_current_line_blame,
+          { desc = '[T]oggle git show [b]lame line' }
+        )
         map('n', '<leader>tD', gitsigns.toggle_deleted, { desc = '[T]oggle git show [D]eleted' })
       end,
     },
+    init = function()
+      vim.cmd [[hi! link GitSignsCurrentLineBlame @comment]]
+    end,
   },
 }
