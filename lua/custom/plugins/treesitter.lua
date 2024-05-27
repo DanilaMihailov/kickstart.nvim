@@ -122,6 +122,9 @@ return {
     config = function()
       require('dropbar').setup()
       vim.cmd.hi 'WinBarNC ctermbg=NONE guibg=NONE'
+      vim.keymap.set('n', '<leader><leader>d', function()
+        require("dropbar.api").pick()
+      end, { desc = '[D]ropbar select' })
     end,
   },
 }
