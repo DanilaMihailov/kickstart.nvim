@@ -16,6 +16,7 @@ return {
         enable = true,
       },
       view = {
+        signcolumn = true,
         adaptive_size = true,
         float = {
           enable = false,
@@ -26,6 +27,21 @@ return {
         },
       },
       renderer = {
+        icons = {
+          git_placement = 'after',
+          modified_placement = 'before',
+          glyphs = {
+            git = {
+              unstaged = 'M',
+              staged = 'S',
+              unmerged = 'U',
+              renamed = 'R',
+              untracked = '?',
+              deleted = 'D',
+              ignored = 'I',
+            },
+          },
+        },
         symlink_destination = false,
         indent_markers = {
           enable = true,
@@ -34,6 +50,8 @@ return {
         },
       },
     }
+
+    vim.cmd 'hi! link NvimTreeWindowPicker Substitute'
 
     vim.keymap.set('n', '\\', function()
       nvim_tree_api.tree.toggle(true)
