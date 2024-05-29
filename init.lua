@@ -154,6 +154,16 @@ end, { desc = '[T]oggle [D]iagnostics' })
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
+vim.keymap.set('n', 'y<C-g>', function()
+  local bufname = vim.api.nvim_buf_get_name(0)
+  local cwd = vim.uv.cwd()
+  if not cwd then
+    return
+  end
+  local relPath = '.' .. bufname:gsub(cwd, '') .. ':' .. vim.fn.line '.'
+  vim.notify('Copied path to clipboard\n' .. relPath, vim.log.levels.INFO)
+  vim.fn.setreg(vim.v.register, relPath)
+end, { desc = 'Yank relative file path' })
 -- TIP: Disable arrow keys in normal mode
 -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
 -- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
