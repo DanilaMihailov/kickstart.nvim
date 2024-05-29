@@ -61,7 +61,10 @@ return { -- Autocompletion
           luasnip.lsp_expand(args.body)
         end,
       },
-      completion = { completeopt = 'menu,menuone,noinsert' },
+      completion = {
+        autocomplete = { 'InsertEnter', 'TextChanged' },
+        completeopt = 'menu,menuone,noinsert',
+      },
 
       -- For an understanding of why these mappings were
       -- chosen, you will need to read `:help ins-completion`
