@@ -442,6 +442,7 @@ require('lazy').setup({
     opts = {
       win_options = {
         signcolumn = 'yes:2',
+        winbar = '%F',
       },
       skip_confirm_for_simple_edits = true,
       delete_to_trash = true,
