@@ -1,5 +1,4 @@
 local ls = require 'luasnip'
-local t = ls.text_node
 local s = ls.snippet
 local i = ls.insert_node
 local d = ls.dynamic_node
@@ -35,8 +34,47 @@ ls.add_snippets('javascript', {
     fmta(
       [[
     angular.module('kkrm').controller('<name>', <name>);
-    function <name> ($scope<args>) {
+    /**
+     * @typedef Scope
+     * @prop {any} someProp описание
+     */
+
+    /**
+     * @param {Scope} $scope
+     */
+    function <name>($scope<args>) {
       <body>
+    };
+    ]],
+      {
+        name = d(1, function()
+          local fname = vim.fs.basename(vim.api.nvim_buf_get_name(0))
+          local splitted = vim.split(fname, '.', { plain = true })
+          return sn(nil, {
+            i(1, splitted[1]),
+          })
+        end),
+        args = i(2),
+        body = i(0),
+      },
+      { repeat_duplicates = true }
+    )
+  ),
+  s(
+    { trig = '$service', name = 'separate sevice' },
+    fmta(
+      [[
+    angular.module('kkrm').service('<name>', <name>);
+    /**
+     * @param {ReturnType<<restModelServ>>} restModelServ
+     * @param {angular.IHttpService} $http
+     */
+    function <name>(restModelServ, $http<args>) {
+      var self = {
+        <body>
+      };
+
+      return self;
     };
     ]],
       {
@@ -57,11 +95,12 @@ ls.add_snippets('javascript', {
     { trig = 'sfn', name = 'scope function' },
     fmta(
       [[
-    $scope.<name> = function (<args>) {
+    $scope.<name> = function <name>(<args>) {
       <body>
     };
     ]],
-      { name = i(1, 'name'), args = i(2), body = i(0) }
+      { name = i(1, 'name'), args = i(2), body = i(0) },
+      { repeat_duplicates = true }
     )
   ),
   s(
