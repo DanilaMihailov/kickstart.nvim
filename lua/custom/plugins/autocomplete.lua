@@ -44,7 +44,9 @@ return { -- Autocompletion
     local cmp = require 'cmp'
     local luasnip = require 'luasnip'
     local lspkind = require 'lspkind'
-    luasnip.config.setup {}
+    luasnip.config.setup {
+      update_events = { 'TextChanged', 'TextChangedI', 'InsertLeave' },
+    }
     require('cmp_git').setup {
       filetypes = { 'gitcommit', 'octo', 'NeogitCommitMessage', 'markdown' },
       gitlab = {
