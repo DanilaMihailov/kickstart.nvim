@@ -526,6 +526,19 @@ require('lazy').setup({
       virtual_symbol = '●',
     },
   },
+  {
+    'iamcco/markdown-preview.nvim',
+    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    ft = { 'markdown' },
+    build = function()
+      vim.fn['mkdp#util#install']()
+    end,
+    init = function()
+      vim.g.mkdp_preview_options = {
+        sync_scroll_type = 'top',
+      }
+    end,
+  },
 }, {
   -- defaults = {
   --   lazy = true,
