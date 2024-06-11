@@ -62,6 +62,7 @@ return { -- Autoformat
         end
       end,
       html = { 'prettier' },
+      javascript = { 'prettier' },
     },
     formatters = {
       eslint_d = {
