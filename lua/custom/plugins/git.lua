@@ -15,8 +15,8 @@ return {
     end,
   },
   { -- git status, branch, commit, merge, etc
-    'NeogitOrg/neogit',
-    -- dir = '~/personal/nvim-plugins/neogit/',
+    -- 'NeogitOrg/neogit',
+    dir = '~/personal/nvim-plugins/neogit/',
     dependencies = {
       'nvim-lua/plenary.nvim', -- required
       'sindrets/diffview.nvim',
@@ -36,7 +36,11 @@ return {
       signs = {
         hunk = { '', '' },
         item = { '', '' },
-        section = { '', '' },
+        section = { '', '' },
+      },
+      commit_editor = {
+        kind = 'split',
+        show_staged_diff = false,
       },
       sections = {
         untracked = {
@@ -47,6 +51,7 @@ return {
         },
       },
       status = {
+        HEAD_folded = true,
         show_head_commit_hash = false,
         mode_padding = 1,
         mode_text = {
