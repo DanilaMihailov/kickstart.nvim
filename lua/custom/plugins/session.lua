@@ -8,6 +8,11 @@ return {
         return
       end
 
+      -- do not restore session when using kitty scrollback
+      if vim.env.KITTY_SCROLLBACK_NVIM == 'true' then
+        return
+      end
+
       vim.schedule(function()
         require('auto-session').AutoRestoreSession()
       end)
