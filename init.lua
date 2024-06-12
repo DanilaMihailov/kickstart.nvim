@@ -203,6 +203,7 @@ vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.opt.foldenable = false -- do not fold by default
 vim.opt.foldtext = '' -- "transparent folds - just text with syntax highlight"
 vim.opt.fillchars = 'fold: '
+vim.opt.fillchars = 'eob: ' -- hide end of buffer '~' symbol
 
 -- require 'mihd.git-commands'
 -- require 'mihd.beacon'
@@ -551,7 +552,7 @@ require('lazy').setup({
   --   lazy = true,
   -- },
   ui = {
-    -- border = 'double',
+    border = 'rounded',
     -- If you are using a Nerd Font: set icons to an empty table which will use the
     -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
     icons = vim.g.have_nerd_font and {} or {
