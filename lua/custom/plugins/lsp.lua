@@ -24,8 +24,10 @@ return { -- LSP Configuration & Plugins
     -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
     -- used for completion, annotations and signatures of Neovim apis
     { 'folke/neodev.nvim', opts = {}, ft = 'lua' },
+    -- { 'folke/lazydev.nvim', ft = 'lua' },
   },
   config = function()
+    require('lspconfig.ui.windows').default_options.border = 'rounded'
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
       callback = function(event)
@@ -149,9 +151,11 @@ return { -- LSP Configuration & Plugins
         autostart = true,
       },
       yamlls = {},
-      biome = {},
+      biome = {
+        autostart = false,
+      },
       eslint = {
-        autostart = false
+        autostart = true,
       },
       tsserver = {
         autostart = true,
@@ -160,6 +164,7 @@ return { -- LSP Configuration & Plugins
       -- Configure `ruff-lsp`.
       -- See: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#ruff_lsp
       ruff_lsp = {
+        autostart = false,
         init_options = {
           settings = {
             -- Any extra CLI arguments for `ruff` go here.

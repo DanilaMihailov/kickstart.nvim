@@ -15,8 +15,8 @@ return {
     end,
   },
   { -- git status, branch, commit, merge, etc
-    -- 'NeogitOrg/neogit',
-    dir = '~/personal/nvim-plugins/neogit/',
+    'NeogitOrg/neogit',
+    -- dir = '~/personal/nvim-plugins/neogit/',
     dependencies = {
       'nvim-lua/plenary.nvim', -- required
       'sindrets/diffview.nvim',

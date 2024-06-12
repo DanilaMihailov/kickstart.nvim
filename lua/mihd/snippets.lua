@@ -108,3 +108,10 @@ ls.add_snippets('javascript', {
     fmta('$scope.<name> = <val>;', { name = i(1, 'name'), val = i(2, 'val') })
   ),
 })
+
+ls.add_snippets('python', {
+  s(
+    { trig = '#t', name = 'type comment' },
+    fmta('# type: (<args>) ->> <ret>', { args = i(1, ''), ret = i(2, 'None') })
+  ),
+})
