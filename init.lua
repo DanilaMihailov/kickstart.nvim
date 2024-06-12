@@ -34,6 +34,8 @@ vim.opt.langmap =
 -- ,, - relative from current in same dir
 vim.opt.path = vim.opt.path + '**,.,,'
 
+vim.opt.showtabline = 0
+
 vim.g.loaded_python3_provider = false
 vim.g.loaded_ruby_provider = false
 vim.g.loaded_perl_provider = false

@@ -18,10 +18,10 @@ return {
     local ok_n, noice = pcall(require, 'noice')
     if ok_n then
       local noice_comps = {
-        {
-          noice.api.status.message.get_hl,
-          cond = noice.api.status.message.has,
-        },
+        -- {
+        --   noice.api.status.message.get_hl,
+        --   cond = noice.api.status.message.has,
+        -- },
         {
           noice.api.status.command.get,
           cond = noice.api.status.command.has,
@@ -45,23 +45,43 @@ return {
       options = {
         globalstatus = true,
         theme = 'auto',
-        icons_enabled = false,
+        icons_enabled = true,
         component_separators = { left = '', right = '' },
+        -- section_separators = { left = '', right = '' },
         section_separators = { left = '', right = '' },
       },
       sections = {
-        lualine_a = { 'branch' },
-        lualine_b = { 'diagnostics' },
+        lualine_a = {
+          {
+            'mode',
+            fmt = function(str)
+              return str:sub(1, 1)
+            end,
+            separator = { left = '', right = '' },
+          },
+        },
+        lualine_b = { 'branch', 'diagnostics' },
         lualine_c = {
           { 'filename', path = 1 },
         },
         lualine_x = line_x,
-        lualine_y = { 'progress' },
-        lualine_z = { 'location' },
+        lualine_y = {
+          'progress',
+        },
+        lualine_z = {
+          {
+            'tabs',
+            mode = 0,
+            max_length = vim.o.columns / 2,
+          },
+          { 'location', separator = { left = '', right = '' } },
+        },
       },
-      tabline = {
-        lualine_a = { { 'tabs', mode = 2, max_length = vim.o.columns } },
-      },
+      -- tabline = {
+      --   lualine_a = {
+      --     { 'tabs', mode = 2, max_length = vim.o.columns, separator = { left = '', right = '' } },
+      --   },
+      -- },
       extensions = { 'quickfix', 'fugitive', 'nvim-tree' },
       -- winbar = {
       --   lualine_a = { 'filename', 'diagnostics' },
